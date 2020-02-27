@@ -1,0 +1,7 @@
+ที่โฟลเดอร์ชื่อ Pocky ข้างในคือ ionic
+และที่เหลือข้างนอกทั้งหมดคือ NodeJS ประกอบด้วย
+	- node_modules
+	- .env
+	- index.js (ไฟล์ทำงานหลักของ NodeJS)
+	- package.json
+	- package-lock
