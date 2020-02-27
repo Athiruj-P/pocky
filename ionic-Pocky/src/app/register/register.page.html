@@ -1,0 +1,67 @@
+<ion-content fullscreen>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="login" text="" icon="chevron-back-outline"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-grid fixed>
+        <ion-text class="title-container" color="light">
+          <h1 class="title">Pocky</h1>
+        </ion-text>
+
+    <ion-row>
+      <ion-col size="12" class="sub-title-container">
+        <ion-text color="light">
+          <h1 class="sub-title">Your Personal Pocket</h1>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <!-- Input username -->
+    <ion-row>
+      <ion-col offset="1" size="10">
+        <ion-input type="text" placeholder="Username">
+          <ion-icon name="person-circle"></ion-icon>
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!-- Input password -->
+    <ion-row>
+      <ion-col offset="1" size="10">
+        <ion-input type="password" placeholder="Password">
+          <ion-icon name="key"></ion-icon>
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!-- Input confirm password -->
+    <ion-row>
+      <ion-col offset="1" size="10">
+        <ion-input type="password" placeholder="Confirm password">
+          <ion-icon name="key"></ion-icon>
+        </ion-input>
+      </ion-col>
+    </ion-row>
+
+    <!-- Button login -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-button (click)="gotoPage('home')" class="btn-login" mode="ios" color="light">REGISTER</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Button cancel -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-text color="light">
+          <h1 (click)="backPage()" class="regis-text">CANCEL</h1>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

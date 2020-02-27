@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Mitr&display=swap');
+
+ion-content {
+    --ion-background-color: linear-gradient(135deg, #EE7EB0, #756CB2);
+}
+
+ion-toolbar {
+    --background: tranparent;
+    ion-back-button{
+        color: white;
+    }
+}
+
+* {
+    font-family: Mitr;
+}
+
+.title-container {
+    .title {
+        margin-top: 0px;
+        font-size: 23vw;
+        text-align: center;
+    }
+}
+
+.sub-title-container {
+    margin-bottom: 4vh;
+
+    .sub-title {
+        margin-top: 0vh;
+        font-size: 7vw;
+        text-align: center;
+    }
+}
+
+ion-input {
+    --background: #FFFFFF;
+    border-radius: 5px;
+    --padding-start: 10px;
+    --placeholder-color: gray;
+    height: 37px;
+    text-align: left;
+}
+
+ion-icon {
+    margin-left: 10px;
+    font-size: 28px;
+}
+
+ion-col {
+    text-align: center;
+
+    .btn-login {
+        --border-radius: 45px;
+        margin-top: 40px;
+        width: 150px;
+        height: 35px;
+    }
+
+    .btn-register {
+        font-size: small;
+        --transition: all;
+        --background-color: transparent;
+    }
+}
+
+.regis-text {
+    font-size: small;
+    text-decoration: underline;
+}
