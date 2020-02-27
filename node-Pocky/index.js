@@ -51,8 +51,8 @@ db.connect(function (err) {
  * Author: Athiruj
  * Create date: 25/02/2020 
  */
-app.post("/account-add",(req,res)=>{
-  let sql =  `
+app.post("/account-register", (req, res) => {
+  let sql = `
     INSERT INTO account (ac_username,ac_password)
     VALUES ("${req.body.username}","${req.body.password}");
   `
@@ -72,6 +72,24 @@ app.post("/account-add",(req,res)=>{
  */
 app.get("/account-get-all", (req, res) => {
   let sql = ` SELECT * FROM account ;`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Get an account for login by username and password
+ * To get an account for login verification
+ * Input: username password
+ * Output: id username password
+ * Author: Athiruj
+ * Create date: 27/02/2020 
+ */
+app.post("/account-login", (req, res) => {
+  let sql = ` SELECT * FROM account 
+              WHERE ac_username = '${req.body.username}' 
+              AND ac_password = '${req.body.password}' ;`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
