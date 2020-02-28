@@ -47,11 +47,7 @@ export class RegisterPage implements OnInit {
           this.account.setUsername(this.username);
           this.account.setPassword(this.password);
           this.account.register().subscribe(res => {
-            if (Object.keys(res).length > 0) {
-              this.gotoPage('home');
-            } else {
-              console.log("login failed");
-            }
+            this.gotoPage('home');
           });
         }
       });
