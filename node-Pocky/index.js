@@ -114,6 +114,22 @@ app.post("/account-get-username", (req, res) => {
   });
 });
 
+/**
+ * Get currency
+ * To get a currency(s)
+ * Input: -
+ * Output: id name nameAbb
+ * Author: Athiruj
+ * Create date: 28/02/2020 
+ */
+app.get("/currency-get-all", (req, res) => {
+  let sql = ` SELECT * FROM currency;`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
 app.listen(3000, () => {
   console.log("Start server at port 3000.");
 });

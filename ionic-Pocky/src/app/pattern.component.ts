@@ -1,5 +1,9 @@
 import { DatabaseService } from 'src/app/services/database.service';
+import { strictEqual } from 'assert';
 
+interface Wallet{
+    walletName: String;
+}
 export class Account {
     private username: string;
     private password: string;
@@ -45,5 +49,26 @@ export class Account {
             "password": this.password,
         };
         return this.databaseService.add_new_user(json);
+    }
+}
+
+export class currency{
+    private name: string;
+    private nameAbb:string;
+
+    setName(name){
+        this.name = name;
+    }
+
+    getName(){
+        return this.name;
+    }
+
+    setNameAbb(nameAbb){
+        this.nameAbb = nameAbb;
+    }
+
+    getNameAbb(){
+        return this.nameAbb;
     }
 }
