@@ -1,17 +1,25 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+
+/**
+ * Import classes from pattern.component.ts
+ * เข้าถึงคลาสต่าง ๆ ที่ต้องใช้ โดยกำหนดชื่อของคลาสที่ต้องการ
+ * Author: Athiruj Poositaporn
+ * Create date: 28/02/2020
+ */
+import { Account } from '../pattern.component';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  private username: any;
+  private username: string;
   private totalBalance: any;
-  private wallets = []
-  constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController) {
-    this.username = "60160116";
+  private wallets = [];
+  constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account) {
+    this.username = this.account.getUsername();
     this.wallets.push(
       { name: "wallet1", balance: 500, currency: "THB" },
       { name: "wallet2", balance: 350, currency: "THB" },
