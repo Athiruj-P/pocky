@@ -4,7 +4,7 @@ export class Account {
     private username: string;
     private password: string;
     public databaseService: DatabaseService;
-    public check:boolean;
+    public check: boolean;
     // private wallet:Wallet[];
     // constructor(databaseService: DatabaseService) {
     //     this.databaseService = databaseService;
@@ -39,7 +39,11 @@ export class Account {
         return this.databaseService.login_varification(json);
     }
 
-    reginter() {
-        // 
+    register() {
+        var json = {
+            "username": this.username,
+            "password": this.password,
+        };
+        return this.databaseService.add_new_user(json);
     }
 }

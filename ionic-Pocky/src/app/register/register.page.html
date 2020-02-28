@@ -23,7 +23,7 @@
     <!-- Input username -->
     <ion-row>
       <ion-col offset="1" size="10">
-        <ion-input type="text" placeholder="Username">
+        <ion-input type="text" [(ngModel)]="username" placeholder="Username">
           <ion-icon name="person-circle"></ion-icon>
         </ion-input>
       </ion-col>
@@ -32,7 +32,7 @@
     <!-- Input password -->
     <ion-row>
       <ion-col offset="1" size="10">
-        <ion-input type="password" placeholder="Password">
+        <ion-input type="password" [(ngModel)]="password" placeholder="Password">
           <ion-icon name="key"></ion-icon>
         </ion-input>
       </ion-col>
@@ -41,7 +41,7 @@
     <!-- Input confirm password -->
     <ion-row>
       <ion-col offset="1" size="10">
-        <ion-input type="password" placeholder="Confirm password">
+        <ion-input type="password" [(ngModel)]="confirm_password" placeholder="Confirm password">
           <ion-icon name="key"></ion-icon>
         </ion-input>
       </ion-col>
@@ -50,7 +50,7 @@
     <!-- Button login -->
     <ion-row>
       <ion-col size="12">
-        <ion-button (click)="gotoPage('home')" class="btn-login" mode="ios" color="light">REGISTER</ion-button>
+        <ion-button (click)="register()" class="btn-login" mode="ios" color="light">REGISTER</ion-button>
       </ion-col>
     </ion-row>
 

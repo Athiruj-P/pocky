@@ -105,7 +105,7 @@ app.post("/account-login", (req, res) => {
  * Author: Athiruj
  * Create date: 28/02/2020 
  */
-app.post("/account-login", (req, res) => {
+app.post("/account-get-username", (req, res) => {
   let sql = ` SELECT ac_id FROM account 
               WHERE ac_username = '${req.body.username}';`;
   let query = db.query(sql, (err, results) => {

@@ -27,4 +27,8 @@ export class DatabaseService {
     return this.http.post<any>(`${this.url}/account-login`, json);
   }
 
+  register_validation(json) {
+    return this.http.post<any>(`${this.url}/account-get-username`, json);
+  }
+
 }
