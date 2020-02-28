@@ -96,6 +96,24 @@ app.post("/account-login", (req, res) => {
   });
 });
 
+
+/**
+ * Get an account by username
+ * To get an exist username 
+ * Input: username
+ * Output: id
+ * Author: Athiruj
+ * Create date: 28/02/2020 
+ */
+app.post("/account-login", (req, res) => {
+  let sql = ` SELECT ac_id FROM account 
+              WHERE ac_username = '${req.body.username}';`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
 app.listen(3000, () => {
   console.log("Start server at port 3000.");
 });
