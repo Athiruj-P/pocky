@@ -16,4 +16,7 @@ export class AddNewWalletPage implements OnInit {
   ngOnInit() {
   }
 
+  async closeModal() {   
+    await this.modalController.dismiss();
+}
 }
