@@ -6,21 +6,21 @@ var bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
 app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
+    bodyParser.urlencoded({
+        extended: true
+    })
 );
 
 // Header to allow Methods
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, Content-Length, X-Requested-With"
-  );
-  next();
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization, Content-Length, X-Requested-With"
+    );
+    next();
 });
 
 // include mysql lib
@@ -33,14 +33,14 @@ var mysql = require("mysql");
  * which inside .env file
  */
 var db = mysql.createConnection({
-  host: process.env.DB_SERVER,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_DATABASE
+    host: process.env.DB_SERVER,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
 });
-db.connect(function (err) {
-  if (err) throw console.log(err);
-  console.log("Connected!");
+db.connect(function(err) {
+    if (err) throw console.log(err);
+    console.log("Connected!");
 });
 
 /**
@@ -52,14 +52,14 @@ db.connect(function (err) {
  * Create date: 25/02/2020 
  */
 app.post("/account-register", (req, res) => {
-  let sql = `
+    let sql = `
     INSERT INTO account (ac_username,ac_password)
     VALUES ("${req.body.username}","${req.body.password}");
   `
-  let query = db.query(sql, (err, result) => {
-    if (err) throw err;
-    res.json(result);
-  });
+    let query = db.query(sql, (err, result) => {
+        if (err) throw err;
+        res.json(result);
+    });
 })
 
 /**
@@ -71,11 +71,11 @@ app.post("/account-register", (req, res) => {
  * Create date: 25/02/2020 
  */
 app.get("/account-get-all", (req, res) => {
-  let sql = ` SELECT * FROM account ;`;
-  let query = db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+    let sql = ` SELECT * FROM account ;`;
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
 });
 
 /**
@@ -87,13 +87,13 @@ app.get("/account-get-all", (req, res) => {
  * Create date: 27/02/2020 
  */
 app.post("/account-login", (req, res) => {
-  let sql = ` SELECT * FROM account 
+    let sql = ` SELECT * FROM account 
               WHERE ac_username = '${req.body.username}' 
               AND ac_password = '${req.body.password}' ;`;
-  let query = db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
 });
 
 
@@ -106,14 +106,14 @@ app.post("/account-login", (req, res) => {
  * Create date: 28/02/2020 
  */
 app.post("/account-get-username", (req, res) => {
-  let sql = ` SELECT ac_id FROM account 
+    let sql = ` SELECT ac_id FROM account 
               WHERE ac_username = '${req.body.username}';`;
-  let query = db.query(sql, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+    let query = db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
 });
 
 app.listen(3000, () => {
-  console.log("Start server at port 3000.");
+    console.log("Start server at port 3000.");
 });

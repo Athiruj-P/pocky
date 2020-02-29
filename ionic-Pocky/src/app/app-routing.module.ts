@@ -8,7 +8,11 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },  {
+    path: 'wallet-detail',
+    loadChildren: () => import('./wallet-detail/wallet-detail.module').then( m => m.WalletDetailPageModule)
   },
+
 ];
 
 @NgModule({
