@@ -32,13 +32,14 @@ export class LoginPage implements OnInit {
   login() {
     this.account.setUsername(this.username);
     this.account.setPassword(this.password);
-    this.account.login().subscribe(res => {
-      if (Object.keys(res).length > 0) {
-        this.gotoPage('home');
-      } else {
-        console.log("login failed");
-      }
-    });
+    this.account.login().then(
+      () => {
+        this.username = "";
+        this.password = "";
+        this.gotoPage('home')
+      },
+      () => console.log("login failed!")
+    )
   }
 
 }

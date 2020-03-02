@@ -1,9 +1,5 @@
 import { DatabaseService } from 'src/app/services/database.service';
-import { strictEqual } from 'assert';
 
-interface Wallet{
-    walletName: String;
-}
 export class Account {
     private username: string;
     private password: string;
@@ -31,16 +27,16 @@ export class Account {
             "username": this.username,
             "password": this.password,
         };
-        // var check: boolean;
-
-        // this.databaseService.login_varification(json).subscribe(res => {
-        //     // check = Object.keys(res).length > 0 ? true : false;
-        //     console.log(`res => ${res}`);
-
-        //     this.check = Object.keys(res).length > 0 ? true : false;
-        // });
-
-        return this.databaseService.login_varification(json);
+        var promise = new Promise((resolve, reject) => {
+            this.databaseService.login_varification(json).subscribe(res => {
+                if (Object.keys(res).length == 0) {
+                    reject(false);
+                } else {
+                    resolve(true);
+                }
+            });
+        });
+        return promise;
     }
 
     register() {
@@ -52,23 +48,23 @@ export class Account {
     }
 }
 
-export class currency{
+export class currency {
     private name: string;
-    private nameAbb:string;
+    private nameAbb: string;
 
-    setName(name){
+    setName(name) {
         this.name = name;
     }
 
-    getName(){
+    getName() {
         return this.name;
     }
 
-    setNameAbb(nameAbb){
+    setNameAbb(nameAbb) {
         this.nameAbb = nameAbb;
     }
 
-    getNameAbb(){
+    getNameAbb() {
         return this.nameAbb;
     }
 }
