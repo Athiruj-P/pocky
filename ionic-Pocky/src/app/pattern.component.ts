@@ -1,11 +1,12 @@
 import { DatabaseService } from 'src/app/services/database.service';
 
 export class Account {
+    private ac_id: number;
     private username: string;
     private password: string;
     public databaseService: DatabaseService;
     public check: boolean;
-    // private wallet:Wallet[];
+    private wallet: Wallet[];
     // constructor(databaseService: DatabaseService) {
     //     this.databaseService = databaseService;
     // }
@@ -22,6 +23,10 @@ export class Account {
         this.password = password;
     }
 
+    getId() {
+        return this.ac_id;
+    }
+
     login() {
         var json = {
             "username": this.username,
@@ -29,10 +34,32 @@ export class Account {
         };
         var promise = new Promise((resolve, reject) => {
             this.databaseService.login_varification(json).subscribe(res => {
+                this.ac_id = res.ac_id;
                 if (Object.keys(res).length == 0) {
                     reject(false);
                 } else {
                     resolve(true);
+                    this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res => {
+                        if (Object.keys(res).length > 0) {
+                            this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res_wal => {
+                                res_wal.forEach(val_wal => {
+                                    var tmpWal = new PersonalWallet;
+                                    var tmpCurrency = new Currency;
+                                    tmpCurrency.setName(val_wal.cur_name);
+                                    tmpCurrency.setNameAbb(val_wal.cur_name_abb);
+                                    tmpWal.setId(val_wal.wal_id);
+                                    tmpWal.setCurrency(tmpCurrency);
+                                    tmpWal.setTotalBalance(val_wal.wal_money);
+                                    this.databaseService.get_transaction_by_wal_id({ wal_id: val_wal.wal_id }).subscribe(res_tran => {
+                                        res_tran.forEach(val_tran => {
+                                            var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
+                                            tmpWal.addTransaction(tmp_tran);
+                                        });
+                                    })
+                                });
+                            })
+                        }
+                    })
                 }
             });
         });
@@ -103,15 +130,19 @@ class PersonalWalletFactory extends WalletFactory {
 }
 
 interface Wallet {
+    id: number;
     walletName: string;
     currency: Currency;
     totalBanance: number;
     transaction: Transaction[];
 
+    setId(id): void;
+    getId(): number;
     setWalletName(name): void;
     getWalletName(): string;
     setCurrency(currency): void;
     getCurrency(): Currency;
+    setTotalBalance(money): void;
     updateTotalBalance(): void;
     getTotalBalance(): number;
     addTransaction(transaction: Transaction): void;
@@ -120,10 +151,19 @@ interface Wallet {
 }
 
 class PersonalWallet implements Wallet {
+    id: number;
     walletName: string;
     currency: Currency;
     totalBanance: number;
     transaction: Transaction[];
+
+    setId(id): void {
+        this.id = id;
+    }
+
+    getId(): number {
+        return this.id;
+    }
 
     setWalletName(name): void {
         this.walletName = name;
@@ -141,7 +181,12 @@ class PersonalWallet implements Wallet {
         return this.currency;
     }
 
+    setTotalBalance(money): void {
+        this.totalBanance = money;
+    }
+
     updateTotalBalance(): void {
+        this.totalBanance = 0;
         this.totalBanance = this.transaction.reduce(function (prev, cur) {
             return prev + cur.getAmount();
         }, 0);
@@ -253,7 +298,7 @@ class Income implements Transaction {
     }
 
     getAmount(): number {
-        return -1*this.amount;
+        return -1 * this.amount;
     }
 
     setDateTime(dataTime): void {

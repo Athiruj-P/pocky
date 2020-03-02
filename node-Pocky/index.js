@@ -115,15 +115,53 @@ app.post("/account-get-username", (req, res) => {
 });
 
 /**
- * Get currency
- * To get a currency(s)
- * Input: -
- * Output: id name nameAbb
+ * Get an wallet by ac_id
+ * To get the user's wallet  
+ * Input: ac_id
+ * Output: id name money ac_id wal_cur_id
  * Author: Athiruj
- * Create date: 28/02/2020 
+ * Create date: 02/03/2020 
  */
-app.get("/currency-get-all", (req, res) => {
-  let sql = ` SELECT * FROM currency;`;
+app.post("/wallet-get-by-id", (req, res) => {
+  let sql = ` SELECT * FROM wallet
+              INNER JOIN currency ON cur_id = wal_cur_id
+              WHERE wal_ac_id = '${req.body.ac_id}';`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Add wallet
+ * To add new user,s wallet
+ * Input: name money ac_id wal_cur_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 02/03/2020 
+ */
+app.post("/wallet-add", (req, res) => {
+  let sql = `
+    INSERT INTO wallet (wal_name,wal_money,wal_ac_id,wal_cur_id)
+    VALUES ("${req.body.wal_name}","${req.body.wal_money}","${req.body.wal_ac_id}","${req.body.wal_cur_id}");
+  `
+  let query = db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+})
+
+/**
+ * Get wallet's transaction(s)
+ * To get all transaction of the wallet
+ * Input: wal_id
+ * Output: wallet
+ * Author: Athiruj
+ * Create date: 02/03/2020 
+ */
+app.post("/transaction-get-by-id", (req, res) => {
+  let sql = ` SELECT * FROM transaction 
+              WHERE tran_wal_id = '${req.body.wal_id}';`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);

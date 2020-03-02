@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { RequestOptions, Headers } from "@angular/http";
-import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -19,7 +18,6 @@ export class DatabaseService {
 
   private url = "http://localhost:3000";
   add_new_user(json) {
-    // return this.http.post(`${this.url}/account-register`, json, this.requestOptions).pipe(map(res => res.json()));
     return this.http.post<any>(`${this.url}/account-register`, json);
   }
 
@@ -31,4 +29,15 @@ export class DatabaseService {
     return this.http.post<any>(`${this.url}/account-get-username`, json);
   }
 
+  add_wallet(json){
+    return this.http.post<any>(`${this.url}/wallet-add`, json);
+  }
+
+  get_wallet_by_ac_id(json){
+    return this.http.post<any>(`${this.url}/wallet-get-by-id`, json);
+  }
+
+  get_transaction_by_wal_id(json){
+    return this.http.post<any>(`${this.url}/transaction-get-by-id`, json);
+  }
 }
