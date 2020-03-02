@@ -1,9 +1,76 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>wallet_detail</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen>
+    <ion-header class="ion-no-border">
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-back-button defaultHref="login" text="" icon="chevron-back-outline"></ion-back-button>
+            </ion-buttons>
+            <ion-title class="text-center" color="light">wallet_detail</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
-<ion-content>
+    <ion-text color="light">
+        <ion-row>
+            <ion-col>
+                <ion-card-content>
+                    <h1 class="font-size-18 text-left">Current Balance</h1>
+                </ion-card-content>
+            </ion-col>
+            <ion-col>
+                <ion-card-content>
+                    <h1 class="font-size-18 text-right">{{totalBalance}} THB</h1>
+                </ion-card-content>
+            </ion-col>
+
+        </ion-row>
+    </ion-text>
+
+    <ion-toolbar>
+        <ion-segment value="all">
+            <ion-segment-button value="all">
+                <ion-label>Transactions</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="favorites">
+                <ion-label>Summary</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+
+    <ion-card class="container">
+        <br>
+        <ion-text class="child-card" mode="md" *ngFor="let value of transactions let i = index">
+            <ion-item class="bg-d-m-y font-size-18">
+                <ion-text color="back">{{value.date}}</ion-text>
+            </ion-item>
+            <ion-item class="child-card-header font-size-18">
+                <ion-text color="back">
+                    {{value.time}}
+                </ion-text>
+            </ion-item>
+            <ion-row>
+                <ion-col>
+                    <ion-card-content class="text-left text-color-black font-size-18">
+                        <ion-icon name="newspaper-outline"></ion-icon>
+
+                        {{value.note}}
+                    </ion-card-content>
+                </ion-col>
+                <ion-col>
+                    <ion-card-content class="text-right text-color-red font-size-18">
+                        {{value.expense}} {{value.current}}
+                    </ion-card-content>
+                </ion-col>
+
+            </ion-row>
+
+        </ion-text>
+    </ion-card>
+
+    <!-- Add transaction button -->
+    <ion-col size="12" class="fab">
+        <ion-button expand="block" class="btn-add-tran" mode="ios">
+            <ion-icon class="icon-wallet" name="wallet"></ion-icon>
+            Add New Wallet
+        </ion-button>
+    </ion-col>
 
 </ion-content>
