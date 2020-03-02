@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/management-menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Wallet Name</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Current Balance</h1>
+
+  <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="friends">
+      <ion-label>Friends</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enemies">
+      <ion-label>Enemies</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <p>Year</p>
+
+  <ion-item>
+    <ion-label>Year</ion-label>
+    <ion-select value="notifications" interface="action-sheet">
+      <ion-select-option value="2019">2019</ion-select-option>
+      <ion-select-option value="2020">2020</ion-select-option>
+      <ion-select-option value="2021">2021</ion-select-option>
+      <ion-select-option value="2022">2022</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <p>Month</p>
+  <ion-item>
+    <ion-label>Month</ion-label>
+    <ion-select value="notifications" interface="action-sheet">
+      <ion-select-option value="2019">January</ion-select-option>
+      <ion-select-option value="2020">2020</ion-select-option>
+      <ion-select-option value="2021">2021</ion-select-option>
+      <ion-select-option value="2022">2022</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-col>
+    <p><ion-icon name="card-outline"></ion-icon> Total Income</p>
+    <p><ion-icon name="document-text-outline"></ion-icon> Total Expense</p>
+  </ion-col>
+</ion-content>
