@@ -36,9 +36,13 @@ export class LoginPage implements OnInit {
       () => {
         this.username = "";
         this.password = "";
-        this.gotoPage('home')
+        this.databaseService.get_wallet_by_ac_id({ac_id:this.account.getId()}).subscribe(res =>{
+          
+        })
       },
-      () => console.log("login failed!")
+      ).then(
+        () => this.gotoPage('home'),
+        () => console.log("login failed!")
     )
   }
 

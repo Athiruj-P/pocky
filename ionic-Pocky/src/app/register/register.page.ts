@@ -10,6 +10,8 @@ import { DatabaseService } from 'src/app/services/database.service';
  * Create date: 28/02/2020
  */
 import { Account } from '../pattern.component';
+import { compileFactoryFunction } from '@angular/compiler/src/render3/r3_factory';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -36,26 +38,16 @@ export class RegisterPage implements OnInit {
 
   register() {
     if (this.password == this.confirm_password) {
-      var json = {
-        "username": this.username,
-        "password": this.password,
-      };
-      this.databaseService.register_validation(json).subscribe(res => {
-        if (Object.keys(res).length > 0) {
-          console.log("username had been taken");
-        } else {
-          this.account.setUsername(this.username);
-          this.account.setPassword(this.password);
-          this.account.register().subscribe(res => {
-            this.gotoPage('home');
-          });
-        }
-      });
-      // this.databaseService.login_varification(json).subscribe(res => {
-      //     // check = Object.keys(res).length > 0 ? true : false;
-      //     console.log(`res => ${res}`);
-      // });
-
+      this.account.setUsername(this.username);
+      this.account.setPassword(this.password);
+      this.account.register().then(
+        () => {
+          this.username = "";
+          this.password = "";
+          this.gotoPage('home')
+        },
+        () => console.log("username had been taken")
+      )
     } else {
       console.log("Password are not match!!");
     }

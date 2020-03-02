@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+import { AddNewWalletPage } from '../add-new-wallet/add-new-wallet.page';
+import { ModalController } from '@ionic/angular';
 
 /**
  * Import classes from pattern.component.ts
@@ -18,7 +20,7 @@ export class HomePage {
   private username: string;
   private totalBalance: any;
   private wallets = [];
-  constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account) {
+  constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController) {
     this.username = this.account.getUsername();
     this.wallets.push(
       { name: "wallet1", balance: 500, currency: "THB" },
@@ -70,6 +72,14 @@ export class HomePage {
   }
 
   backPage() {
+    // delete this.account;
     this.navCtrl.navigateBack('/login');
+  }
+
+  async showModel() {
+    const modal = await this.modalController.create({
+      component: AddNewWalletPage
+    });
+    return await modal.present();
   }
 }
