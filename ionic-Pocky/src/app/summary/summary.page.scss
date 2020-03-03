@@ -4,9 +4,15 @@ ion-content {
   --ion-background-color: linear-gradient(135deg, #ee7eb0, #756cb2);
 }
 
-// ion-title {
-//     font-size: 20px !important;
-// }
+ion-title {
+    font-size: 20px !important;
+}
+
+span ion-icon{
+    --background: tranparent;
+    color: gray;
+}
+
 ion-title {
   width: 100%;
   padding: 0px;

@@ -19,7 +19,7 @@
       <h1>Current Balance</h1>
     </ion-col>
     <ion-col class="CurrentBalance">
-      <h1>300.00 THB</h1>
+      <h1>{{Current}} {{Currency}}</h1>
     </ion-col>
   </ion-row>
 
@@ -36,22 +36,32 @@
   <ion-card class="container">
     <ion-card-content class="content">
       <!-- Year -->
-      <ion-item>
-        <ion-label>Year</ion-label>
-        <ion-select value="notifications" interface="action-sheet">
-          <ion-select-option value="2019">2019</ion-select-option>
-          <ion-select-option value="2020">2020</ion-select-option>
-          <ion-select-option value="2021">2021</ion-select-option>
-          <ion-select-option value="2022">2022</ion-select-option>
-        </ion-select>
-      </ion-item>
+      <ion-toolbar>
+        <ion-text>
+          <ion-label position="floating">Year</ion-label>
+        </ion-text>
+        <ion-item>
+          <ion-label color="Primary" (click)="Show_Year_Summary()">{{ Year }}</ion-label>
+          <ion-button fill="clear" (click)="Show_Year_Summary()">
+            <span>
+              <ion-icon name="caret-down-outline"></ion-icon>
+            </span>
+          </ion-button>
+        </ion-item>
 
-      <!-- Month -->
-      <ion-item>
-        <ion-label>Month</ion-label>
-        <ion-select (click)="show_month()" color="primary" interface="popover">
-        </ion-select>
-      </ion-item>
+        <!-- Month -->
+        <ion-text>
+          <ion-label position="floating">Month</ion-label>
+        </ion-text>
+        <ion-item>
+          <ion-label color="Primary" (click)="Show_Month_Summary()">{{ Month }}</ion-label>
+          <ion-button fill="clear" (click)="Show_Month_Summary()">
+            <span>
+              <ion-icon name="caret-down-outline"></ion-icon>
+            </span>
+          </ion-button>
+        </ion-item>
+      </ion-toolbar>
 
       <ion-col>
         <!-- Total Income -->
@@ -63,7 +73,7 @@
                 <span>Total Income</span>
               </ion-col>
               <ion-col class="totalIncome">
-                <p>500.00 THB</p>
+                <p>{{Income}} {{Currency}}</p>
               </ion-col>
             </ion-row>
           </ion-label>
@@ -78,7 +88,7 @@
                 <span>Total Expense</span>
               </ion-col>
               <ion-col class="totalExpense">
-                <p>200.00 THB</p>
+                <p>{{Expense}} {{Currency}}</p>
               </ion-col>
             </ion-row>
           </ion-label>
@@ -93,12 +103,13 @@
                 <span>Total Balance</span>
               </ion-col>
               <ion-col class="totalBalance">
-                <p>300.00 THB</p>
+                <p>{{Balance}} {{Currency}}</p>
               </ion-col>
             </ion-row>
           </ion-label>
         </ion-item>
       </ion-col>
+      
     </ion-card-content>
   </ion-card>
 </ion-content>
