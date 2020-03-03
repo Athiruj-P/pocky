@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
-import { ModalController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { AddNewWalletPage } from '../add-new-wallet/add-new-wallet.page';
+import { ModalController } from '@ionic/angular';
 
 /**
  * Import classes from pattern.component.ts
@@ -75,17 +76,17 @@ export class HomePage {
     this.navCtrl.navigateBack('/login');
   }
 
-  // async showModel() {
-  //   const modal = await this.modalController.create({
-  //     component: AddNewWalletPage
-  //   });
+  async showModel() {
+    const modal = await this.modalController.create({
+      component: AddNewWalletPage
+    });
 
-  //   modal.onDidDismiss().then(() => {
-  //     this.calculateTotal();
-  //   }); 
+    modal.onDidDismiss().then(() => {
+      this.calculateTotal();
+    }); 
 
-  //   return await modal.present();
-  // }
+    return await modal.present();
+  }
 
   async presentAlert(index) {
     const alert = await this.alertController.create({

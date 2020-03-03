@@ -1,0 +1,54 @@
+<ion-content fullscreen>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="#" (click)="closeModal()" text="" icon="chevron-back-outline"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-title color="light" mode="ios">Add New Wallet</ion-title>
+  </ion-header>
+
+  <ion-card class="container">
+    <ion-card-content class="content">
+
+      <!-- Input name -->
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <!-- Select currency -->
+      <ion-item>
+        <ion-label>Currency</ion-label>
+        <ion-select value="THB" okText="OK" cancelText="Cancel">
+          <ion-select-option value="THB">THB</ion-select-option>
+          <ion-select-option value="USD">USD</ion-select-option>
+          <ion-select-option value="EUR">EUR</ion-select-option>
+          <ion-select-option value="CAD">CAD</ion-select-option>
+          <ion-select-option value="JPY">JPY</ion-select-option>
+          <ion-select-option value="NZD">NZD</ion-select-option>
+          <ion-select-option value="CNY">CNY</ion-select-option>
+          <ion-select-option value="KRW">KRW</ion-select-option>
+          <ion-select-option value="AUD">AUD</ion-select-option>
+          <ion-select-option value="RUB">RUB</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Input balance -->
+      <ion-item>
+        <ion-label position="floating">Initial Balance</ion-label>
+        <ion-input type="number"></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Add new wallet button -->
+  <ion-col size="12" class="fab">
+    <ion-button (click)="closeModal()" expand="block" class="btn-add-wallet" mode="ios">
+      <ion-icon class="icon-wallet" name="wallet"></ion-icon>
+      Add New Wallet
+    </ion-button>
+  </ion-col>
+
+</ion-content>
