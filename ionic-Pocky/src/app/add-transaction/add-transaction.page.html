@@ -1,9 +1,42 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>add-transaction</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>Add Transaction</ion-title>
 
-<ion-content>
+      <ion-buttons slot="end">
+        <ion-buttons (click)="closeModal()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-buttons>
+      </ion-buttons>
+    </ion-toolbar>
 
+    <br>
+
+    <ion-segment (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="Expenses">
+        <ion-label>Expenses</ion-label>
+      </ion-segment-button>
+
+      <ion-segment-button value="Income">
+        <ion-label>Income</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+  </ion-header>
+
+  <ion-card class="container">
+    <ion-card-content class="content">
+      <br> <br> <br>
+
+      &nbsp;&nbsp; Initial Balance
+      <ion-item>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+      <br> <br> <br>
+     <ion-item>
+        <textarea ></textarea>
+     </ion-item>
+   
+    </ion-card-content>
+  </ion-card>
 </ion-content>
