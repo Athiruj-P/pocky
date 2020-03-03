@@ -14,7 +14,7 @@ export class SummaryPage implements OnInit {
     this.sDefaultEmail = 'example@gmail.com';
   }
 
-  async show_edit_time() {
+  async Show_Year_Summary() {
     let opts: PickerOptions = {
       cssClass: 'academy-picker',
       buttons: [

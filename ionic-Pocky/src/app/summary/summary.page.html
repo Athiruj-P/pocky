@@ -2,68 +2,110 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="#" text="" icon="chevron-back-outline"></ion-back-button>
+        <ion-back-button
+          defaultHref="#"
+          (click)="closeModal()"
+          text=""
+          icon="chevron-back-outline"
+        ></ion-back-button>
       </ion-buttons>
     </ion-toolbar>
     <ion-title color="light" mode="ios">Wallet Name</ion-title>
   </ion-header>
 
-  <ion-text>
-    <h1 color="light" mode="ios">Current Balance</h1>
-  </ion-text>
-  <ion-toolbar>
-    <ion-segment value="all">
-      <ion-segment-button value="all">
-        <ion-label color="light" mode="ios">Transactions</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="favorites">
-        <ion-label color="light" mode="ios">Summary</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  <!-- Current Balance -->
+  <ion-row>
+    <ion-col size="6">
+      <h1>Current Balance</h1>
+    </ion-col>
+    <ion-col class="CurrentBalance">
+      <h1>300.00 THB</h1>
+    </ion-col>
+  </ion-row>
+
+  <!-- Segment -->
+  <ion-segment mode="ios" value="summary">
+    <ion-segment-button value="transactions">
+      <ion-label>Transactions</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="summary">
+      <ion-label>Summary</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 
   <ion-card class="container">
     <ion-card-content class="content">
+      <!-- Year -->
 
       <ion-toolbar>
         <ion-text>
           <ion-label position="floating">Year</ion-label>
         </ion-text>
         <ion-item>
-          <!-- <ion-label>Year</ion-label> -->
-          <ion-label color="Primary" (click)="show_edit_time()">{{ Year }}</ion-label>
-          <ion-button fill="clear" (click)="show_edit_time()"><span><ion-icon name="caret-down-outline"></ion-icon></span></ion-button>
+          <ion-label color="Primary" (click)="Show_Year_Summary()">{{ Year }}</ion-label>
+          <ion-button fill="clear" (click)="Show_Year_Summary()"><span><ion-icon name="caret-down-outline"></ion-icon></span></ion-button>
         </ion-item>
 
-        <ion-text>
-          <ion-label position="floating">Month</ion-label>
-        </ion-text>
+      <!-- Month -->
+      <ion-item>
+        <ion-label>Month</ion-label>
+        <ion-datetime displayFormat="MMMM" value="2020-01-15T13:47:20.789"></ion-datetime>
+      </ion-item>
+
+    </ion-toolbar>
+      <!-- <ion-item>
+        <ion-label>Month</ion-label>
+        <ion-select (click)="show_month()" color="primary" interface="popover">
+        </ion-select>
+      </ion-item> -->
+
+      <ion-col>
+        <!-- Total Income -->
         <ion-item>
-          <ion-label>Month</ion-label>
-          <ion-select value="notifications" interface="action-sheet">
-          </ion-select>
+          <ion-label>
+            <ion-row>
+              <ion-col size="6">
+                <ion-icon name="card-outline"></ion-icon>
+                <span>Total Income</span>
+              </ion-col>
+              <ion-col class="totalIncome">
+                <p>500.00 THB</p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
         </ion-item>
 
-        <ion-col>
-          <ion-item>
-            <p>
-              <ion-icon name="card-outline"></ion-icon> Total Income
-            </p>
-          </ion-item>
-          <ion-item>
-            <p>
-              <ion-icon name="document-text-outline"></ion-icon> Total Expense
-            </p>
-          </ion-item>
-          <ion-item>
-            <p>
-              <ion-icon name="cash-outline"></ion-icon> Total Balance
-            </p>
-          </ion-item>
-        </ion-col>
-      </ion-toolbar>
+        <!-- Total Expense -->
+        <ion-item>
+          <ion-label>
+            <ion-row>
+              <ion-col size="6">
+                <ion-icon name="card-outline"></ion-icon>
+                <span>Total Expense</span>
+              </ion-col>
+              <ion-col class="totalExpense">
+                <p>200.00 THB</p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
 
+        <!-- Total Balance -->
+        <ion-item>
+          <ion-label>
+            <ion-row>
+              <ion-col size="6">
+                <ion-icon name="card-outline"></ion-icon>
+                <span>Total Balance</span>
+              </ion-col>
+              <ion-col class="totalBalance">
+                <p>300.00 THB</p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+
+      </ion-col>
     </ion-card-content>
   </ion-card>
-
 </ion-content>
