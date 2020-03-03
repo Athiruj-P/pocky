@@ -4,8 +4,9 @@ ion-content {
     --ion-background-color: linear-gradient(135deg, #EE7EB0, #756CB2);
 }
 
-
-
+// ion-title {
+//     font-size: 20px !important;
+// }
 ion-title  {
     width: 100%;
     padding: 0px;
@@ -43,39 +44,6 @@ ion-toolbar {
     }
 }
 
-ion-avatar {
-    max-width: 40px;
-    height: auto;
-}
-
-.btn-logout {
-    color: white;
-
-}
-
-.total-balance {
-    h1 {
-        font-size: 10vw;
-    }
-}
-
-.total-title {
-    h1 {
-        margin-top: 0px !important;
-        font-size: 25px;
-        font-weight: lighter;
-    }
-}
-
-ion-toolbar {
-    --background: tranparent;
-    padding-left: 20px;
-
-    ion-back-button {
-        color: white;
-    }
-}
-
 * {
     font-family: Mitr;
 }
@@ -94,7 +62,7 @@ ion-toolbar {
     --background: white;
     width: 100% !important;
     bottom: 0%;
-    height: 65vh;
+    height: 85vh;
     border-top-left-radius: 45px;
     border-top-right-radius: 45px;
     margin: 0 !important;
@@ -151,14 +119,10 @@ ion-card-title {
     position: fixed;
     bottom: 0%;
 
-    .btn-add-tran {
+    .btn-add-wallet {
         --background: #FFC31C;
-        --background-focused:rgb(206, 156, 19) !important;
-        --background-hover:rgb(206, 156, 19) !important;
-        --background-activated:rgb(206, 156, 19) !important;
+        --background-focused: rgb(206, 156, 19) !important;
+        --background-hover: rgb(206, 156, 19) !important;
+        --background-activated: rgb(206, 156, 19) !important;
     }
-}
-
-.icon-wallet{
-    margin-right: 10px;
 }
