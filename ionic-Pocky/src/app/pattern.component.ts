@@ -1,14 +1,11 @@
 import { DatabaseService } from 'src/app/services/database.service';
 import 'rxjs/add/operator/map';
 export class Account {
-    public ac_id: number;
-    public username: string;
-    public password: string;
+    private ac_id: number;
+    private username: string;
+    private password: string;
     public databaseService: DatabaseService;
-    public wallet = [];
-    // constructor(databaseService: DatabaseService) {
-    //     this.databaseService = databaseService;
-    // }
+    private wallet = [];
 
     setUsername(username: string) {
         this.username = username;
@@ -137,6 +134,13 @@ export class Account {
 
     getWallet() {
         return this.wallet;
+    }
+
+    clearAccount() {
+        this.ac_id = 0;
+        this.username = "";
+        this.password = "";
+        this.wallet = [];
     }
 }
 
@@ -362,4 +366,3 @@ class Income implements Transaction {
         return this.dataTime;
     }
 }
- 

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
-import { AddNewWalletPage } from '../add-new-wallet/add-new-wallet.page';
 import { ModalController } from '@ionic/angular';
 
 /**
@@ -22,7 +21,6 @@ export class HomePage {
   private wallets = [];
   constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController) {
     this.username = this.account.getUsername();
-    this.wallets = [];
     this.wallets = this.account.wallet;
     this.username = account.username;
   }
@@ -71,14 +69,14 @@ export class HomePage {
   }
 
   backPage() {
-    // delete this.account;
+    this.account.clearAccount();
     this.navCtrl.navigateBack('/login');
   }
 
-  async showModel() {
-    const modal = await this.modalController.create({
-      component: AddNewWalletPage
-    });
-    return await modal.present();
-  }
+  // async showModel() {
+  //   const modal = await this.modalController.create({
+  //     component: AddNewWalletPage
+  //   });
+  //   return await modal.present();
+  // }
 }

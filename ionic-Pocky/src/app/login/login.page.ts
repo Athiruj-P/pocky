@@ -19,10 +19,10 @@ export class LoginPage implements OnInit {
   private password: string;
 
   constructor(private databaseService: DatabaseService, private router: Router, private account: Account) {
-    this.account.databaseService = this.databaseService;
   }
-
+  
   ngOnInit() {
+    this.account.databaseService = this.databaseService;
   }
 
   gotoPage(page) {
