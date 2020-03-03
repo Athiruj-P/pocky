@@ -2,7 +2,8 @@
   <ion-header class="ion-no-border">
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="#" (click)="closeModal()" text="" icon="chevron-back-outline"></ion-back-button>
+        <ion-back-button defaultHref="home" (click)="closeModal()" text="" icon="chevron-back-outline">
+        </ion-back-button>
       </ion-buttons>
     </ion-toolbar>
     <ion-title color="light" mode="ios">Add New Wallet</ion-title>
@@ -14,30 +15,35 @@
       <!-- Input name -->
       <ion-item>
         <ion-label position="floating">Name</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input [(ngModel)]="name" type="text"></ion-input>
       </ion-item>
 
       <!-- Select currency -->
       <ion-item>
         <ion-label>Currency</ion-label>
-        <ion-select value="THB" okText="OK" cancelText="Cancel">
-          <ion-select-option value="THB">THB</ion-select-option>
-          <ion-select-option value="USD">USD</ion-select-option>
-          <ion-select-option value="EUR">EUR</ion-select-option>
-          <ion-select-option value="CAD">CAD</ion-select-option>
-          <ion-select-option value="JPY">JPY</ion-select-option>
-          <ion-select-option value="NZD">NZD</ion-select-option>
-          <ion-select-option value="CNY">CNY</ion-select-option>
-          <ion-select-option value="KRW">KRW</ion-select-option>
-          <ion-select-option value="AUD">AUD</ion-select-option>
-          <ion-select-option value="RUB">RUB</ion-select-option>
+        <!-- <ion-select [(ngModel)]="currency" (click)="selectedOption()" okText="OK" cancelText="Cancel" >
+          <ion-select-option *ngFor="let cur of option_currency let i = index" value="{{cur.id}}">{{cur.cur_name}}</ion-select-option>
+        </ion-select> -->
+
+        <!-- <ion-select value="1" [(ngModel)]="currency" (ionChange)="selectedOption()">
+          <ion-select-option *ngFor="let cur of option_currency; let i = index" value={{cur.id}}>
+            {{cur.cur_name}}
+          </ion-select-option>
+        </ion-select> -->
+
+        <ion-select [(ngModel)]="currency" (ionChange)="selectedOption()">
+          <ion-select-option value="1">THB</ion-select-option>
+          <ion-select-option value="2">USD</ion-select-option>
+          <ion-select-option value="3">JPY</ion-select-option>
+          <ion-select-option value="4">CAD</ion-select-option>
         </ion-select>
+
       </ion-item>
 
       <!-- Input balance -->
       <ion-item>
         <ion-label position="floating">Initial Balance</ion-label>
-        <ion-input type="number"></ion-input>
+        <ion-input [(ngModel)]="money" type="number"></ion-input>
       </ion-item>
 
     </ion-card-content>
@@ -45,7 +51,7 @@
 
   <!-- Add new wallet button -->
   <ion-col size="12" class="fab">
-    <ion-button (click)="closeModal()" expand="block" class="btn-add-wallet" mode="ios">
+    <ion-button (click)="addWallet()" expand="block" class="btn-add-wallet" mode="ios">
       <ion-icon class="icon-wallet" name="wallet"></ion-icon>
       Add New Wallet
     </ion-button>
