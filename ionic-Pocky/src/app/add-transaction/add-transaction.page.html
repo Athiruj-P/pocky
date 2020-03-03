@@ -1,42 +1,58 @@
 <ion-content fullscreen>
   <ion-header class="ion-no-border">
     <ion-toolbar>
-      <ion-title>Add Transaction</ion-title>
+      <ion-title color="light">Add Transaction</ion-title>
 
       <ion-buttons slot="end">
         <ion-buttons (click)="closeModal()">
           <ion-icon slot="icon-only" name="close"></ion-icon>
         </ion-buttons>
       </ion-buttons>
+
     </ion-toolbar>
-
-    <br>
-
-    <ion-segment (ionChange)="segmentChanged($event)">
+    <ion-segment class="segment-control-top" [(ngModel)]="yudsegment" mode="ios">
       <ion-segment-button value="Expenses">
         <ion-label>Expenses</ion-label>
       </ion-segment-button>
 
-      <ion-segment-button value="Income">
+      <ion-segment-button value="Income" >
         <ion-label>Income</ion-label>
       </ion-segment-button>
     </ion-segment>
+
+    <!-- <div [ngSwitch]="yudsegment">
+      <ion-list *ngSwitchCase="'Expenses'">
+        <ion-item>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngSwitchCase="'Income'">
+        <ion-item>
+        </ion-item>
+      </ion-list>
+    </div> -->
 
   </ion-header>
 
   <ion-card class="container">
     <ion-card-content class="content">
-      <br> <br> <br>
 
-      &nbsp;&nbsp; Initial Balance
-      <ion-item>
+      <ion-item class="item-control-top ">
+        <ion-label position="floating">Intial Balance</ion-label>
         <ion-input type="text"></ion-input>
       </ion-item>
-      <br> <br> <br>
-     <ion-item>
-        <textarea ></textarea>
-     </ion-item>
-   
+      <ion-item>
+        <ion-label position="floating">Notes</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
     </ion-card-content>
+
+    <ion-button expand="block" class="btn-add-tran button-control-bottom" mode="ios" color="warning">
+      <ion-icon class="icon-wallet" name="card-outline"></ion-icon>
+      Add Transaction
+    </ion-button>
+
   </ion-card>
+
 </ion-content>
+
