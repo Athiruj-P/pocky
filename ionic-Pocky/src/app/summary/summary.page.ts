@@ -10,6 +10,7 @@ import { PickerOptions } from '@ionic/core';
 })
 export class SummaryPage implements OnInit {
   selected = [''];
+  Month = 'Month';
   constructor(private router: Router, private pickerCtrl: PickerController) { }
 
   async show_month() {
