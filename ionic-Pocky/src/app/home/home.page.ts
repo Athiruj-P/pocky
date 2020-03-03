@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 /**
  * Import classes from pattern.component.ts
@@ -18,7 +20,7 @@ export class HomePage {
   private username: string;
   private totalBalance: any;
   private wallets = [];
-  constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account) {
+  constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account,public alertController: AlertController,public modalController: ModalController,private alertCtrl: AlertController) {
     this.username = this.account.getUsername();
     this.wallets.push(
       { name: "wallet1", balance: 500, currency: "THB" },
@@ -49,12 +51,14 @@ export class HomePage {
         text: 'Edit name',
         handler: () => {
           console.log('Edit name');
+          this.presentPrompt();
         }
       }, {
         text: 'Delete',
         role: 'destructive',
         handler: () => {
           console.log('Delete');
+          this.presentAlert();
           this.wallets.splice(index, 1);
           this.getTotalBalance();
         }
@@ -72,4 +76,61 @@ export class HomePage {
   backPage() {
     this.navCtrl.navigateBack('/login');
   }
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Delete',
+      message: 'Confirm Delete',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Confirm',
+          role: 'confirm',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentPrompt() {
+    let alert = await this.alertCtrl.create({
+      header: 'Edit',
+      message: 'Edit Name',
+      inputs: [
+        {
+          name: 'name',
+          placeholder: 'name'
+        },
+      
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: data => {
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+
+
 }
