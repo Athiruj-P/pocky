@@ -8,49 +8,47 @@
     <ion-title color="light" mode="ios">Add New Wallet</ion-title>
   </ion-header>
 
-    <ion-text color="primary">
-      <ion-row>
+  <ion-card class="container">
+    <ion-card-content class="content">
 
-        <ion-col size="11" offset="0.3">
-          <ion-item>
-            <ion-label position="floating">name</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
-        </ion-col>
+      <!-- Input name -->
+      <ion-item>
+        <ion-label position="floating">Name</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
 
-        <ion-col size="11" offset="0.3">
-          <ion-item>
-            <ion-label>Currency</ion-label>
-            <ion-select value="THB" okText="OK" cancelText="Cancel">
-              <ion-select-option value="THB">THB</ion-select-option>
-              <ion-select-option value="USD">USD</ion-select-option>
-              <ion-select-option value="EUR">EUR</ion-select-option>
-              <ion-select-option value="CAD">CAD</ion-select-option>
-              <ion-select-option value="JPY">JPY</ion-select-option>
-              <ion-select-option value="NZD">NZD</ion-select-option>
-              <ion-select-option value="CNY">CNY</ion-select-option>
-              <ion-select-option value="KRW">KRW</ion-select-option>
-              <ion-select-option value="AUD">AUD</ion-select-option>
-              <ion-select-option value="RUB">RUB</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
+      <!-- Select currency -->
+      <ion-item>
+        <ion-label>Currency</ion-label>
+        <ion-select value="THB" okText="OK" cancelText="Cancel">
+          <ion-select-option value="THB">THB</ion-select-option>
+          <ion-select-option value="USD">USD</ion-select-option>
+          <ion-select-option value="EUR">EUR</ion-select-option>
+          <ion-select-option value="CAD">CAD</ion-select-option>
+          <ion-select-option value="JPY">JPY</ion-select-option>
+          <ion-select-option value="NZD">NZD</ion-select-option>
+          <ion-select-option value="CNY">CNY</ion-select-option>
+          <ion-select-option value="KRW">KRW</ion-select-option>
+          <ion-select-option value="AUD">AUD</ion-select-option>
+          <ion-select-option value="RUB">RUB</ion-select-option>
+        </ion-select>
+      </ion-item>
 
-        <ion-col size="11" offset="0.3">
-          <ion-item>
-            <ion-label position="floating">Initial Balance</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-text>
+      <!-- Input balance -->
+      <ion-item>
+        <ion-label position="floating">Initial Balance</ion-label>
+        <ion-input type="number"></ion-input>
+      </ion-item>
 
+    </ion-card-content>
+  </ion-card>
 
-    <ion-col size="12" class="fab">
-      <ion-button (click)="showModel()" expand="block" class="btn-add-tran" mode="ios">
-        <ion-icon class="icon-wallet" name="wallet"></ion-icon>
-        Add New Wallet
-      </ion-button>
-    </ion-col>
+  <!-- Add new wallet button -->
+  <ion-col size="12" class="fab">
+    <ion-button (click)="closeModal()" expand="block" class="btn-add-wallet" mode="ios">
+      <ion-icon class="icon-wallet" name="wallet"></ion-icon>
+      Add New Wallet 55555555
+    </ion-button>
+  </ion-col>
 
 </ion-content>
