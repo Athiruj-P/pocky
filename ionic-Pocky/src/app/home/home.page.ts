@@ -21,8 +21,8 @@ export class HomePage {
   private wallets = [];
   constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController) {
     this.username = this.account.getUsername();
-    this.wallets = this.account.wallet;
-    this.username = account.username;
+    this.wallets = this.account.getWallet();
+    this.username = account.getUsername();
   }
 
   calculateTotal() {
