@@ -1,49 +1,69 @@
-<ion-header>
+<ion-content fullscreen>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="#" text="" icon="chevron-back-outline"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-title color="light" mode="ios">Wallet Name</ion-title>
+  </ion-header>
+
+  <ion-text>
+    <h1 color="light" mode="ios">Current Balance</h1>
+  </ion-text>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/management-menu"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Wallet Name</ion-title>
+    <ion-segment value="all">
+      <ion-segment-button value="all">
+        <ion-label color="light" mode="ios">Transactions</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        <ion-label color="light" mode="ios">Summary</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
-</ion-header>
 
-<ion-content>
-  <h1>Current Balance</h1>
+  <ion-card class="container">
+    <ion-card-content class="content">
 
-  <ion-segment (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="friends">
-      <ion-label>Friends</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="enemies">
-      <ion-label>Enemies</ion-label>
-    </ion-segment-button>
-  </ion-segment>
+      <ion-toolbar>
+        <ion-text>
+          <ion-label position="floating">Year</ion-label>
+        </ion-text>
+        <ion-item>
+          <!-- <ion-label>Year</ion-label> -->
+          <ion-label color="Primary" (click)="show_edit_time()">{{ Year }}</ion-label>
+          <ion-button fill="clear" (click)="show_edit_time()"><span><ion-icon name="caret-down-outline"></ion-icon></span></ion-button>
+        </ion-item>
 
-  <p>Year</p>
+        <ion-text>
+          <ion-label position="floating">Month</ion-label>
+        </ion-text>
+        <ion-item>
+          <ion-label>Month</ion-label>
+          <ion-select value="notifications" interface="action-sheet">
+          </ion-select>
+        </ion-item>
 
-  <ion-item>
-    <ion-label>Year</ion-label>
-    <ion-select value="notifications" interface="action-sheet">
-      <ion-select-option value="2019">2019</ion-select-option>
-      <ion-select-option value="2020">2020</ion-select-option>
-      <ion-select-option value="2021">2021</ion-select-option>
-      <ion-select-option value="2022">2022</ion-select-option>
-    </ion-select>
-  </ion-item>
+        <ion-col>
+          <ion-item>
+            <p>
+              <ion-icon name="card-outline"></ion-icon> Total Income
+            </p>
+          </ion-item>
+          <ion-item>
+            <p>
+              <ion-icon name="document-text-outline"></ion-icon> Total Expense
+            </p>
+          </ion-item>
+          <ion-item>
+            <p>
+              <ion-icon name="cash-outline"></ion-icon> Total Balance
+            </p>
+          </ion-item>
+        </ion-col>
+      </ion-toolbar>
 
-  <p>Month</p>
-  <ion-item>
-    <ion-label>Month</ion-label>
-    <ion-select value="notifications" interface="action-sheet">
-      <ion-select-option value="2019">January</ion-select-option>
-      <ion-select-option value="2020">2020</ion-select-option>
-      <ion-select-option value="2021">2021</ion-select-option>
-      <ion-select-option value="2022">2022</ion-select-option>
-    </ion-select>
-  </ion-item>
+    </ion-card-content>
+  </ion-card>
 
-  <ion-col>
-    <p><ion-icon name="card-outline"></ion-icon> Total Income</p>
-    <p><ion-icon name="document-text-outline"></ion-icon> Total Expense</p>
-  </ion-col>
 </ion-content>
