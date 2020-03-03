@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http , RequestOptions, Headers } from "@angular/http";
+import { Http, RequestOptions, Headers } from "@angular/http";
 // import { HttpClient } from '@angular/common/http';
 
 
@@ -29,19 +29,27 @@ export class DatabaseService {
     return this.http.post(`${this.url}/account-get-username`, json).map(res => res.json());
   }
 
-  add_wallet(json){
+  add_wallet(json) {
     return this.http.post(`${this.url}/wallet-add`, json).map(res => res.json());
   }
 
-  get_wallet_by_ac_id(json){
+  get_wallet_by_ac_id(json) {
     return this.http.post(`${this.url}/wallet-get-by-id`, json).map(res => res.json());
   }
 
-  get_transaction_by_wal_id(json){
+  get_transaction_by_wal_id(json) {
     return this.http.post(`${this.url}/transaction-get-by-id`, json).map(res => res.json());
   }
 
-  get_all_currency(){
+  get_all_currency() {
     return this.http.get(`${this.url}/currency-get-all`).map(res => res.json());
+  }
+
+  remove_wallet_by_id(json) {
+    return this.http.post(`${this.url}/wallet-remove-by-id`, json).map(res => res.json());
+  }
+
+  rename_wallet_by_id(json) {
+    return this.http.post(`${this.url}/wallet-rename-by-id`, json).map(res => res.json());
   }
 }

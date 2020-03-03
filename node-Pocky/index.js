@@ -125,7 +125,8 @@ app.post("/account-get-username", (req, res) => {
 app.post("/wallet-get-by-id", (req, res) => {
   let sql = ` SELECT * FROM wallet
               INNER JOIN currency ON cur_id = wal_cur_id
-              WHERE wal_ac_id = '${req.body.ac_id}';`;
+              WHERE wal_ac_id = '${req.body.ac_id}'
+              AND wal_status = 'Y' ;`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -178,7 +179,43 @@ app.post("/transaction-get-by-id", (req, res) => {
  */
 app.get("/currency-get-all", (req, res) => {
   let sql = ` SELECT * FROM currency
-              ORDER BY cur_name;`;
+              ORDER BY cur_id;`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Remove wallet by id
+ * To remove wallet by id
+ * Input: wal_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 03/03/2020 
+ */
+app.post("/wallet-remove-by-id", (req, res) => {
+  let sql = ` UPDATE wallet
+              SET wal_status = 'N'
+              WHERE wal_id ='${req.body.wal_id}';`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Rename wallet by id
+ * To rename wallet by id
+ * Input: wal_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 03/03/2020 
+ */
+app.post("/wallet-rename-by-id", (req, res) => {
+  let sql = ` UPDATE wallet
+              SET wal_name ="${req.body.wal_name}"
+              WHERE wal_id ="${req.body.wal_id}";`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);

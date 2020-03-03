@@ -35,7 +35,8 @@ export class Account {
                 } else {
                     this.ac_id = res[0].ac_id;
                     this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res => {
-                        res = res[0];
+                        // res = res[0];
+                        console.log(JSON.stringify(res, null, 4));
                         if (Object.keys(res).length > 0) {
                             this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res_wal => {
                                 // res_wal = res_wal[0];
@@ -50,20 +51,17 @@ export class Account {
                                         tmpWal.setWalletName(val_wal.wal_name);
                                         tmpWal.setCurrency(tmpCurrency);
                                         tmpWal.setTotalBalance(val_wal.wal_money);
-                                        this.databaseService.get_transaction_by_wal_id({ wal_id: val_wal.wal_id }).subscribe(res_tran => {
-                                            res_tran.forEach(val_tran => {
-                                                var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
-                                                tmpWal.addTransaction(tmp_tran);
-                                            });
-                                        })
+
                                         console.log("===== temp =====");
                                         console.log(JSON.stringify(tmpWal, null, 4));
                                         this.wallet.push(tmpWal);
                                         console.log("===== wallet =====");
                                         console.log(JSON.stringify(this.wallet, null, 4));
                                     });
+                                    resolve(true);
+                                } else {
+                                    resolve(true);
                                 }
-                                resolve(true);
                             })
                         } else {
                             resolve(true);
@@ -75,37 +73,22 @@ export class Account {
         return promise;
     }
 
-    loadWallet() {
-        this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res => {
-            res = res[0];
-            if (Object.keys(res).length > 0) {
-                this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res_wal => {
-                    // res_wal = res_wal[0];
-                    console.log(JSON.stringify(res_wal, null, 4));
-                    res_wal.forEach(val_wal => {
-                        var tmpWal = new PersonalWallet;
-                        var tmpCurrency = new Currency;
-                        tmpCurrency.setName(val_wal.cur_name);
-                        tmpCurrency.setNameAbb(val_wal.cur_name_abb);
-                        tmpWal.setId(val_wal.wal_id);
-                        tmpWal.setWalletName(val_wal.wal_name);
-                        tmpWal.setCurrency(tmpCurrency);
-                        tmpWal.setTotalBalance(val_wal.wal_money);
-                        this.databaseService.get_transaction_by_wal_id({ wal_id: val_wal.wal_id }).subscribe(res_tran => {
-                            res_tran.forEach(val_tran => {
-                                var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
-                                tmpWal.addTransaction(tmp_tran);
-                            });
-                        })
-                        console.log("===== temp =====");
-                        console.log(JSON.stringify(tmpWal, null, 4));
-                        this.wallet.push(tmpWal);
-                        console.log("===== wallet =====");
-                        console.log(JSON.stringify(this.wallet, null, 4));
+    loadWallet(wal_id) {
+        var promise = new Promise((resolve, reject) => {
+            var transaction = [];
+            this.databaseService.get_transaction_by_wal_id({ wal_id: wal_id }).subscribe(res_tran => {
+                if (Object.keys(res_tran).length > 0) {
+                    res_tran.forEach(val_tran => {
+                        var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
+                        transaction.push(tmp_tran);
                     });
-                })
-            }
+                    resolve(transaction);
+                } else {
+                    reject();
+                }
+            })
         })
+        return promise;
     }
 
     register() {
@@ -212,7 +195,7 @@ export class PersonalWallet implements Wallet {
     walletName: string;
     currency: Currency;
     totalBanance: number;
-    transaction: Transaction[];
+    transaction = [];
 
     setId(id): void {
         this.wal_id = id;
