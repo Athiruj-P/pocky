@@ -8,7 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 /**
@@ -21,7 +22,7 @@ import { Account } from './pattern.component';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule , HttpClientModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule , HttpClientModule ,HttpModule,FormsModule],
   providers: [
     Account,
     StatusBar,

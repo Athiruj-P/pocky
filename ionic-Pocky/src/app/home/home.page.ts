@@ -18,25 +18,24 @@ import { Account } from '../pattern.component';
 })
 export class HomePage {
   private username: string;
-  private totalBalance: any;
+  private totalBalance = 0;
   private wallets = [];
   constructor(private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController) {
     this.username = this.account.getUsername();
-    this.wallets.push(
-      { name: "wallet1", balance: 500, currency: "THB" },
-      { name: "wallet2", balance: 350, currency: "THB" },
-      { name: "wallet3", balance: 100, currency: "THB" },
-      { name: "wallet4", balance: 20, currency: "THB" }
-    );
-
-    this.getTotalBalance();
+    this.wallets = [];
+    this.wallets = this.account.wallet;
+    this.username = account.username;
   }
 
-  getTotalBalance() {
+  calculateTotal() {
     this.totalBalance = 0;
     this.wallets.forEach(val => {
-      this.totalBalance += val.balance;
+      this.totalBalance += val.getTotalBalance();
     });
+  }
+
+  ngOnInit(): void {
+    this.calculateTotal();
   }
 
   async cardAction(index) {
@@ -57,8 +56,8 @@ export class HomePage {
         role: 'destructive',
         handler: () => {
           console.log('Delete');
-          this.wallets.splice(index, 1);
-          this.getTotalBalance();
+          // this.wallets.splice(index, 1);
+          // this.getTotalBalance();
         }
       }, {
         text: 'Cancel',

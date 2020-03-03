@@ -34,7 +34,7 @@
     <ion-card-content class="content">
       <ion-card class="child-card" mode="md" *ngFor="let wallet of wallets let i = index">
         <ion-item class="child-card-header">
-          <ion-text color="light">{{wallet.name}}</ion-text>
+          <ion-text color="light">{{wallet.getWalletName()}}</ion-text>
           <ion-icon class="pencil" name="pencil"></ion-icon>
           <ion-icon (click)="cardAction(i)" name="ellipsis-horizontal" slot="end"></ion-icon>
         </ion-item>
@@ -43,7 +43,7 @@
           <ion-card-subtitle>Current balance</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content class="balance">
-          {{wallet.balance}} {{wallet.currency}}
+          {{wallet.getTotalBalance()}} {{wallet.getCurrency().getNameAbb()}}
         </ion-card-content>
       </ion-card>
       <!-- End child card(s) -->
@@ -53,7 +53,7 @@
 
   <!-- Add transaction button -->
   <ion-col size="12" class="fab">
-    <ion-button expand="block" class="btn-add-tran" mode="ios">
+    <ion-button (click)="showModel()" expand="block" class="btn-add-tran" mode="ios">
       <ion-icon class = "icon-wallet" name="wallet"></ion-icon>
       Add New Wallet
     </ion-button>

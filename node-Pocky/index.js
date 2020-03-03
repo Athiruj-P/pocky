@@ -168,6 +168,23 @@ app.post("/transaction-get-by-id", (req, res) => {
   });
 });
 
+/**
+ * Get all currency
+ * To get all currencies
+ * Input: -
+ * Output: currencies
+ * Author: Athiruj
+ * Create date: 02/03/2020 
+ */
+app.get("/currency-get-all", (req, res) => {
+  let sql = ` SELECT * FROM currency
+              ORDER BY cur_name;`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
 app.listen(3000, () => {
   console.log("Start server at port 3000.");
 });

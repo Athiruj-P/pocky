@@ -1,12 +1,11 @@
 import { DatabaseService } from 'src/app/services/database.service';
-
+import 'rxjs/add/operator/map';
 export class Account {
-    private ac_id: number;
-    private username: string;
-    private password: string;
+    public ac_id: number;
+    public username: string;
+    public password: string;
     public databaseService: DatabaseService;
-    public check: boolean;
-    private wallet: Wallet[];
+    public wallet = [];
     // constructor(databaseService: DatabaseService) {
     //     this.databaseService = databaseService;
     // }
@@ -34,36 +33,82 @@ export class Account {
         };
         var promise = new Promise((resolve, reject) => {
             this.databaseService.login_varification(json).subscribe(res => {
-                this.ac_id = res.ac_id;
                 if (Object.keys(res).length == 0) {
                     reject(false);
                 } else {
-                    resolve(true);
+                    this.ac_id = res[0].ac_id;
                     this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res => {
+                        res = res[0];
                         if (Object.keys(res).length > 0) {
                             this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res_wal => {
-                                res_wal.forEach(val_wal => {
-                                    var tmpWal = new PersonalWallet;
-                                    var tmpCurrency = new Currency;
-                                    tmpCurrency.setName(val_wal.cur_name);
-                                    tmpCurrency.setNameAbb(val_wal.cur_name_abb);
-                                    tmpWal.setId(val_wal.wal_id);
-                                    tmpWal.setCurrency(tmpCurrency);
-                                    tmpWal.setTotalBalance(val_wal.wal_money);
-                                    this.databaseService.get_transaction_by_wal_id({ wal_id: val_wal.wal_id }).subscribe(res_tran => {
-                                        res_tran.forEach(val_tran => {
-                                            var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
-                                            tmpWal.addTransaction(tmp_tran);
-                                        });
-                                    })
-                                });
+                                // res_wal = res_wal[0];
+                                console.log(JSON.stringify(res_wal, null, 4));
+                                if (Object.keys(res_wal).length > 0) {
+                                    res_wal.forEach(val_wal => {
+                                        var tmpWal = new PersonalWallet;
+                                        var tmpCurrency = new Currency;
+                                        tmpCurrency.setName(val_wal.cur_name);
+                                        tmpCurrency.setNameAbb(val_wal.cur_name_abb);
+                                        tmpWal.setId(val_wal.wal_id);
+                                        tmpWal.setWalletName(val_wal.wal_name);
+                                        tmpWal.setCurrency(tmpCurrency);
+                                        tmpWal.setTotalBalance(val_wal.wal_money);
+                                        this.databaseService.get_transaction_by_wal_id({ wal_id: val_wal.wal_id }).subscribe(res_tran => {
+                                            res_tran.forEach(val_tran => {
+                                                var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
+                                                tmpWal.addTransaction(tmp_tran);
+                                            });
+                                        })
+                                        console.log("===== temp =====");
+                                        console.log(JSON.stringify(tmpWal, null, 4));
+                                        this.wallet.push(tmpWal);
+                                        console.log("===== wallet =====");
+                                        console.log(JSON.stringify(this.wallet, null, 4));
+                                    });
+                                }
+                                resolve(true);
                             })
+                        } else {
+                            resolve(true);
                         }
                     })
                 }
             });
         });
         return promise;
+    }
+
+    loadWallet() {
+        this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res => {
+            res = res[0];
+            if (Object.keys(res).length > 0) {
+                this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res_wal => {
+                    // res_wal = res_wal[0];
+                    console.log(JSON.stringify(res_wal, null, 4));
+                    res_wal.forEach(val_wal => {
+                        var tmpWal = new PersonalWallet;
+                        var tmpCurrency = new Currency;
+                        tmpCurrency.setName(val_wal.cur_name);
+                        tmpCurrency.setNameAbb(val_wal.cur_name_abb);
+                        tmpWal.setId(val_wal.wal_id);
+                        tmpWal.setWalletName(val_wal.wal_name);
+                        tmpWal.setCurrency(tmpCurrency);
+                        tmpWal.setTotalBalance(val_wal.wal_money);
+                        this.databaseService.get_transaction_by_wal_id({ wal_id: val_wal.wal_id }).subscribe(res_tran => {
+                            res_tran.forEach(val_tran => {
+                                var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
+                                tmpWal.addTransaction(tmp_tran);
+                            });
+                        })
+                        console.log("===== temp =====");
+                        console.log(JSON.stringify(tmpWal, null, 4));
+                        this.wallet.push(tmpWal);
+                        console.log("===== wallet =====");
+                        console.log(JSON.stringify(this.wallet, null, 4));
+                    });
+                })
+            }
+        })
     }
 
     register() {
@@ -84,6 +129,14 @@ export class Account {
 
         });
         return promise;
+    }
+
+    setWallet(wallet) {
+        this.wallet.push(wallet);
+    }
+
+    getWallet() {
+        return this.wallet;
     }
 }
 
@@ -119,18 +172,18 @@ export class Currency {
                                |___/                                                                    
  */
 
-abstract class WalletFactory {
+export abstract class WalletFactory {
     public abstract createWallet(): Wallet;
 }
 
-class PersonalWalletFactory extends WalletFactory {
+export class PersonalWalletFactory extends WalletFactory {
     public createWallet(): Wallet {
         return new PersonalWallet();
     }
 }
 
-interface Wallet {
-    id: number;
+export interface Wallet {
+    wal_id: number;
     walletName: string;
     currency: Currency;
     totalBanance: number;
@@ -150,19 +203,19 @@ interface Wallet {
     getTransaction(): Transaction[];
 }
 
-class PersonalWallet implements Wallet {
-    id: number;
+export class PersonalWallet implements Wallet {
+    wal_id: number;
     walletName: string;
     currency: Currency;
     totalBanance: number;
     transaction: Transaction[];
 
     setId(id): void {
-        this.id = id;
+        this.wal_id = id;
     }
 
     getId(): number {
-        return this.id;
+        return this.wal_id;
     }
 
     setWalletName(name): void {
@@ -309,3 +362,4 @@ class Income implements Transaction {
         return this.dataTime;
     }
 }
+ 
