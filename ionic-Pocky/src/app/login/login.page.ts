@@ -32,13 +32,6 @@ export class LoginPage implements OnInit {
   login() {
     this.account.setUsername(this.username);
     this.account.setPassword(this.password);
-    this.databaseService.get_all_currency().subscribe(res => {
-      console.log(JSON.stringify(res, null, 4))
-      res.forEach(val => {
-        console.log(JSON.stringify(val, null, 4))
-      });
-    })
-
     this.account.login().then(
       () => {
         this.username = "";
