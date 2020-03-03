@@ -10,7 +10,10 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./add-new-wallet.page.scss'],
 })
 export class AddNewWalletPage implements OnInit {
-
+  private name:string;
+  private currency:any;
+  private money:any;
+  
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {
