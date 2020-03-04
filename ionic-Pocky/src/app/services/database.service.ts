@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, Headers } from "@angular/http";
+import 'rxjs/add/operator/map';
 // import { HttpClient } from '@angular/common/http';
 
 
@@ -18,7 +19,7 @@ export class DatabaseService {
 
   private url = "http://localhost:3000";
   add_new_user(json) {
-    return this.http.post(`${this.url}/account-register`, json).map(res => res.json()).map(res => res.json());
+    return this.http.post(`${this.url}/account-register`, json).map(res => res.json());
   }
 
   login_varification(json) {
