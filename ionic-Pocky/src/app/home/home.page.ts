@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-import { AddNewWalletPage } from '../add-new-wallet/add-new-wallet.page';
 import { ModalController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
 
 /**
  * Import classes from pattern.component.ts
@@ -12,7 +11,7 @@ import { ModalController } from '@ionic/angular';
  * Create date: 28/02/2020
  */
 import { Account } from '../pattern.component';
-// import { AddNewWalletPage } from '../add-new-wallet/add-new-wallet.page';
+import { AddNewWalletPage } from '../add-new-wallet/add-new-wallet.page';
 import { DatabaseService } from 'src/app/services/database.service';
 @Component({
   selector: 'app-home',
@@ -87,7 +86,6 @@ export class HomePage {
 
     return await modal.present();
   }
-
   async presentAlert(index) {
     const alert = await this.alertController.create({
       header: 'Delete',

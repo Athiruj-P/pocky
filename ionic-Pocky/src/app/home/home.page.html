@@ -26,7 +26,7 @@
     <h1 class="text-center">Total balance</h1>
   </ion-text>
   <ion-text class="total-balance" color="light">
-    <h1 class="text-center">{{totalBalance}} THB</h1>
+    <h1 class="text-center">{{totalBalance.toLocaleString('en-US')}} THB</h1>
   </ion-text>
 
   <ion-card class="container">
@@ -43,7 +43,7 @@
           <ion-card-subtitle>Current balance</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content class="balance">
-          {{wallet.getTotalBalance()}} {{wallet.getCurrency().getNameAbb()}}
+          {{wallet.getTotalBalance().toLocaleString('en-US')}} {{wallet.getCurrency().getNameAbb()}}
         </ion-card-content>
       </ion-card>
       <!-- End child card(s) -->
