@@ -3,6 +3,7 @@ import { ActionSheetController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 /**
  * Import classes from pattern.component.ts
@@ -22,13 +23,16 @@ export class HomePage {
   private username: string;
   private totalBalance = 0;
   private wallets = [];
-  constructor(private alertController: AlertController, private databaseService: DatabaseService, private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController) {
+  constructor(private alertController: AlertController, private databaseService: DatabaseService, private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController, private router: Router) {
     this.username = this.account.getUsername();
     this.wallets = this.account.getWallet();
     this.username = account.getUsername();
+    this.calculateTotal();
   }
 
   calculateTotal() {
+    console.log("home page => in cal")
+    console.log(this.wallets)
     this.totalBalance = 0;
     this.wallets.forEach(val => {
       this.totalBalance += val.getTotalBalance();
@@ -36,6 +40,10 @@ export class HomePage {
   }
 
   ngOnInit(): void {
+    // this.calculateTotal();
+  }
+
+  ionViewWillEnter() {
     this.calculateTotal();
   }
 
@@ -82,7 +90,7 @@ export class HomePage {
 
     modal.onDidDismiss().then(() => {
       this.calculateTotal();
-    }); 
+    });
 
     return await modal.present();
   }
@@ -149,6 +157,12 @@ export class HomePage {
       ]
     });
     alert.present();
+  }
+
+  gotoPage(page, index) {
+    this.router.navigate([page], {
+      queryParams: { index: index }
+    });
   }
 
 }
