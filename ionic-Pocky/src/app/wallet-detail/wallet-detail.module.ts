@@ -15,6 +15,7 @@ import { WalletDetailPage } from './wallet-detail.page';
     IonicModule,
     WalletDetailPageRoutingModule
   ],
-  declarations: [WalletDetailPage]
+  declarations: [WalletDetailPage],
+  entryComponents:[]
 })
 export class WalletDetailPageModule {}
