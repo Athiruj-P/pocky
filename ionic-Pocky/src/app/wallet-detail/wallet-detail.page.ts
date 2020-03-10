@@ -87,18 +87,18 @@ export class WalletDetailPage implements OnInit {
           "tran_id": val.getTransactionId(),
           "tran_des": val.getDescription(),
           "tran_amount": val.getAmount()
-        })
+        });
       } else if (tmp_date == val.getDateTime().substr(0, 10)) {
         this.tran_detail.push({
           "tran_id": val.getTransactionId(),
           "tran_des": val.getDescription(),
           "tran_amount": val.getAmount()
-        })
+        });
       } else {
         this.tran_date.push({
           "date": this.dateHelper(tmp_date),
           "tran_detail": this.tran_detail
-        })
+        });
         this.tran_detail = [];
 
         tmp_date = val.getDateTime().substr(0, 10);
@@ -106,10 +106,15 @@ export class WalletDetailPage implements OnInit {
           "tran_id": val.getTransactionId(),
           "tran_des": val.getDescription(),
           "tran_amount": val.getAmount()
-        })
+        });
       }
 
-
+      if (tmp_tran.length - 1 == index) {
+        this.tran_date.push({
+          "date": this.dateHelper(tmp_date),
+          "tran_detail": this.tran_detail
+        });
+      }
 
     });
   }
