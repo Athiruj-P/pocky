@@ -74,6 +74,7 @@ export class HomePage {
   }
 
   backPage() {
+    this.account.clearAccount();
     this.navCtrl.navigateBack('/login');
   }
   async presentAlert() {
@@ -94,6 +95,11 @@ export class HomePage {
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirm Okay');
+            console.log('Delete');
+            this.account.databaseService.remove_wallet_by_id({ wal_id: this.wallets[index].getId() }).subscribe(res => {
+                this.wallets.splice(index, 1);
+                this.calculateTotal();
+            })
           }
         }
       ]

@@ -117,3 +117,41 @@ app.post("/account-get-username", (req, res) => {
 app.listen(3000, () => {
   console.log("Start server at port 3000.");
 });
+
+/**
+ * Remove wallet by id
+ * To remove get wallet by id
+ * Input: wal_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 03/03/2020 
+ */
+app.post("wallet-remove-by-id", (req, res) => {
+  let sql = ` UPDATE wallet
+              SET wal_status = 'N'
+              WHERE wal_id = '${req.body.wal_id}';`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+
+});
+
+ /**
+ * Remove wallet by id
+ * To remove get wallet by id
+ * Input: wal_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 03/03/2020 
+ */
+app.post("wallet-remove-by-id", (req, res) => {
+  let sql = ` UPDATE wallet
+              SET wal_status = "${req.body.wal_id}"
+              WHERE wal_id = "${req.body.wal_id}";`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+
+});

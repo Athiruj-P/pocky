@@ -34,10 +34,11 @@
     <ion-card-content class="content">
       <ion-card class="child-card" mode="md" *ngFor="let wallet of wallets let i = index">
         <ion-item class="child-card-header">
-          <ion-text color="light">{{wallet.name}}</ion-text>
-          <ion-icon class="pencil" name="pencil"></ion-icon>
+          <ion-text color="light">{{wallet.getWalletName}}</ion-text>
+          <ion-icon class="pencil" name="pencil" (click)="this.presentPrompt(i)"></ion-icon>
           <ion-icon (click)="cardAction(i)" name="ellipsis-horizontal" slot="end"></ion-icon>
         </ion-item>
+          <div (click)="gotoPage('wallet-detail',i)">
 
         <ion-card-header>
           <ion-card-subtitle>Current balance</ion-card-subtitle>
@@ -45,6 +46,8 @@
         <ion-card-content class="balance">
           {{wallet.balance}} {{wallet.currency}}
         </ion-card-content>
+      </div>
+      
       </ion-card>
       <!-- End child card(s) -->
     </ion-card-content>
