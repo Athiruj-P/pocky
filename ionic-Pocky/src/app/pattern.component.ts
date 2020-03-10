@@ -36,11 +36,11 @@ export class Account {
                     this.ac_id = res[0].ac_id;
                     this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res => {
                         // res = res[0];
-                        console.log(JSON.stringify(res, null, 4));
+                        // console.log(JSON.stringify(res, null, 4));
                         if (Object.keys(res).length > 0) {
                             this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res_wal => {
                                 // res_wal = res_wal[0];
-                                console.log(JSON.stringify(res_wal, null, 4));
+                                // console.log(JSON.stringify(res_wal, null, 4));
                                 if (Object.keys(res_wal).length > 0) {
                                     res_wal.forEach(val_wal => {
                                         var tmpWal = new PersonalWallet;
@@ -52,11 +52,11 @@ export class Account {
                                         tmpWal.setCurrency(tmpCurrency);
                                         tmpWal.setTotalBalance(val_wal.wal_money);
 
-                                        console.log("===== temp =====");
-                                        console.log(JSON.stringify(tmpWal, null, 4));
+                                        // console.log("===== temp =====");
+                                        // console.log(JSON.stringify(tmpWal, null, 4));
                                         this.wallet.push(tmpWal);
-                                        console.log("===== wallet =====");
-                                        console.log(JSON.stringify(this.wallet, null, 4));
+                                        // console.log("===== wallet =====");
+                                        // console.log(JSON.stringify(this.wallet, null, 4));
                                     });
                                     resolve(true);
                                 } else {
@@ -80,6 +80,11 @@ export class Account {
                 if (Object.keys(res_tran).length > 0) {
                     res_tran.forEach(val_tran => {
                         var tmp_tran = val_tran.tran_type == 1 ? new Income : new Expenditure;
+                        // console.log(`pattern => ID => ${val_tran.tran_id}`)
+                        tmp_tran.setTransactionId(val_tran.tran_id);
+                        tmp_tran.setDescription(val_tran.tran_name);
+                        tmp_tran.setAmount(val_tran.tran_amount);
+                        tmp_tran.setDateTime(val_tran.tran_date);
                         transaction.push(tmp_tran);
                     });
                     resolve(transaction);
@@ -101,7 +106,8 @@ export class Account {
                 if (Object.keys(res).length > 0) {
                     reject(false);
                 } else {
-                    this.databaseService.add_new_user(json).subscribe(() => {
+                    this.databaseService.add_new_user(json).subscribe(res => {
+                        this.ac_id = res[0].ac_id;
                         resolve(true);
                     });
                 }
@@ -170,12 +176,6 @@ export class PersonalWalletFactory extends WalletFactory {
 }
 
 export interface Wallet {
-    wal_id: number;
-    walletName: string;
-    currency: Currency;
-    totalBanance: number;
-    transaction: Transaction[];
-
     setId(id): void;
     getId(): number;
     setWalletName(name): void;
@@ -183,7 +183,7 @@ export interface Wallet {
     setCurrency(currency): void;
     getCurrency(): Currency;
     setTotalBalance(money): void;
-    updateTotalBalance(): void;
+    updateTotalBalance(): any;
     getTotalBalance(): number;
     addTransaction(transaction: Transaction): void;
     removeTransaction(index): void;
@@ -194,7 +194,7 @@ export class PersonalWallet implements Wallet {
     wal_id: number;
     walletName: string;
     currency: Currency;
-    totalBanance: number;
+    totalBalance: number;
     transaction = [];
 
     setId(id): void {
@@ -222,22 +222,27 @@ export class PersonalWallet implements Wallet {
     }
 
     setTotalBalance(money): void {
-        this.totalBanance = money;
+        this.totalBalance = money;
     }
 
-    updateTotalBalance(): void {
-        this.totalBanance = 0;
-        this.totalBanance = this.transaction.reduce(function (prev, cur) {
-            return prev + cur.getAmount();
-        }, 0);
+    updateTotalBalance(): any {
+        var promise = new Promise((resolve, reject) => {
+            this.totalBalance = 0;
+            this.transaction.forEach(val => {
+                this.totalBalance += val.getAmount();
+            });
+            resolve(this.totalBalance);
+        })
+
+        return promise;
     }
 
     getTotalBalance(): number {
-        return this.totalBanance;
+        return this.totalBalance;
     }
 
     addTransaction(transaction: Transaction): void {
-        this.transaction.push(transaction);
+        this.transaction.unshift(transaction);
         this.updateTotalBalance();
     }
 
@@ -263,40 +268,83 @@ abstract class TransactionFactory {
     public abstract createTran(): Transaction;
 }
 
-class ExpenditureFactory extends TransactionFactory {
+export class ExpenditureFactory extends TransactionFactory {
 
     public createTran(): Transaction {
         return new Expenditure();
     }
 }
 
-class IncomeFactory extends TransactionFactory {
+export class IncomeFactory extends TransactionFactory {
     public createTran(): Transaction {
         return new Income();
     }
 }
 
-interface Transaction {
-    descripttion: string;
-    amount: number;
-    dataTime: Date;
-
+export interface Transaction {
+    setTransactionId(id): void
+    getTransactionId(): number
     setDescription(des): void;
     getDescription(): string;
     setAmount(amount): void;
     getAmount(): number;
     setDateTime(dataTime): void;
-    getDateTime(): Date;
-
+    getDateTime(): string;
 }
 
-class Expenditure implements Transaction {
+export class Expenditure implements Transaction {
+    tran_id: number
     descripttion: string;
     amount: number;
-    dataTime: Date;
+    dataTime: string;
+
+    setTransactionId(id): void {
+        this.tran_id = id;
+    }
+    getTransactionId(): number {
+        return this.tran_id;
+    }
 
     setDescription(des): void {
-        this.setDescription = des;
+        this.descripttion = des;
+    }
+
+    getDescription(): string {
+        return this.descripttion;
+    }
+
+    setAmount(amount): void {
+        this.amount = amount;
+    }
+
+    getAmount(): number {
+        return -this.amount;
+    }
+
+    setDateTime(dataTime): void {
+        this.dataTime = dataTime;
+    }
+
+    getDateTime(): string {
+        return this.dataTime;
+    }
+}
+
+export class Income implements Transaction {
+    tran_id: number;
+    descripttion: string;
+    amount: number;
+    dataTime: string;
+
+    setTransactionId(id): void {
+        this.tran_id = id;
+    }
+    getTransactionId(): number {
+        return this.tran_id;
+    }
+
+    setDescription(des): void {
+        this.descripttion = des;
     }
 
     getDescription(): string {
@@ -315,37 +363,7 @@ class Expenditure implements Transaction {
         this.dataTime = dataTime;
     }
 
-    getDateTime(): Date {
-        return this.dataTime;
-    }
-}
-
-class Income implements Transaction {
-    descripttion: string;
-    amount: number;
-    dataTime: Date;
-
-    setDescription(des): void {
-        this.setDescription = des;
-    }
-
-    getDescription(): string {
-        return this.descripttion;
-    }
-
-    setAmount(amount): void {
-        this.amount = amount;
-    }
-
-    getAmount(): number {
-        return -1 * this.amount;
-    }
-
-    setDateTime(dataTime): void {
-        this.dataTime = dataTime;
-    }
-
-    getDateTime(): Date {
+    getDateTime(): string {
         return this.dataTime;
     }
 }

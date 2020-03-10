@@ -4,6 +4,8 @@ import { NavController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { OverlayEventDetail } from '@ionic/core';
+import { AddTransactionPage } from '../add-transaction/add-transaction.page';
 
 /**
  * Import classes from pattern.component.ts
@@ -48,14 +50,18 @@ export class HomePage {
   }
 
   async cardAction(index) {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Actions',
-      buttons: [{
+    /**
+     * {
         text: 'Add transaction',
         handler: () => {
           console.log('Add transaction');
+          this.modal_addTransaction(index)
         }
-      }, {
+      },
+     */
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Actions',
+      buttons: [ {
         text: 'Edit name',
         handler: () => {
           console.log('Edit name');
@@ -163,6 +169,24 @@ export class HomePage {
     this.router.navigate([page], {
       queryParams: { index: index }
     });
+  }
+
+  async modal_addTransaction(index) {
+    const modal = await this.modalController.create({
+      component: AddTransactionPage,
+      componentProps: {
+        index: index
+      }
+    });
+
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+    }).then(() => {
+      return Promise.resolve(
+        this.calculateTotal()
+      );
+    })
+
+    return await modal.present();
   }
 
 }
