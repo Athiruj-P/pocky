@@ -20,47 +20,29 @@
         </ion-row>
     </ion-text>
 
-    <ion-toolbar>
-        <ion-segment value="all">
-            <ion-segment-button value="all">
-                <ion-label>Transactions</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="favorites">
-                <ion-label>Summary</ion-label>
-            </ion-segment-button>
-        </ion-segment>
-    </ion-toolbar>
+    <!-- Segment -->
+    <ion-segment mode="ios" [(ngModel)]="segment" value="transactions">
+        <ion-segment-button value="transactions">
+            <ion-label>Transactions</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="summary">
+            <ion-label>Summary</ion-label>
+        </ion-segment-button>
+    </ion-segment>
 
-    <ion-card class="container">
-        <br>
-        <ion-text class="child-card" mode="md" *ngFor="let value of transactions let i = index">
-            <ion-item class="bg-d-m-y font-size-18">
-                <ion-text color="back">{{value.date}}</ion-text>
-            </ion-item>
-            <ion-item class="child-card-header font-size-18">
-                <ion-text color="back">
-                    {{value.time}}
-                </ion-text>
-            </ion-item>
-            <ion-row>
-                <ion-col>
-                    <ion-card-content class="text-left text-color-black font-size-18">
-                        <ion-icon name="newspaper-outline"></ion-icon>
+    <ino-card> 
+        <div>
+            <ion-card>
+                <ion-item-group>
+                    <ion-item-divider>
+                        <ion-label>
 
-                        {{value.note}}
-                    </ion-card-content>
-                </ion-col>
-                <ion-col>
-                    <ion-card-content class="text-right text-color-red font-size-18">
-                        {{value.expense}} {{value.current}}
-                    </ion-card-content>
-                </ion-col>
-
-            </ion-row>
-
-        </ion-text>
-        <br><br>
-    </ion-card>
+                        </ion-label>
+                    </ion-item-divider>
+                </ion-item-group>
+            </ion-card>
+        </div>
+    </ino-card>
 
     <!-- Add transaction button -->
     <ion-col size="12" class="fab">
