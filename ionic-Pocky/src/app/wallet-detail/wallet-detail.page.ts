@@ -118,5 +118,176 @@ export class WalletDetailPage implements OnInit {
 
     });
   }
+  load_transaction() {
+    this.account.loadWallet(this.account.getWallet()[this.currentWalletIndex].getId()).then(
+      (tran) => { this.account.getWallet()[this.currentWalletIndex].transaction = tran; }
+    ).then(
+      () => { this.calculateTotal(); }
+    ).then(
+      () => { this.format_transaction(); }
+    );
+  }
+
+  async Show_Year_Summary() {
+    let opts: PickerOptions = {
+      cssClass: 'academy-picker',
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Done'
+        }
+      ],
+      columns: [
+        {
+          name: 'Year',
+          options: [
+            { text: 'Year ', value: 'Year' },
+            { text: '2017 ', value: '2017' },
+            { text: '2018 ', value: '2018' },
+            { text: '2019 ', value: '2019' },
+            { text: '2020 ', value: '2020' }
+          ]
+        }
+      ]
+    };
+    let picker = await this.pickerCtrl.create(opts);
+    picker.present();
+    picker.onDidDismiss().then(async data => {
+      let Year = await picker.getColumn('Year');
+      this.Year = Year.options[Year.selectedIndex].value;
+    });
+  }
+
+  async Show_Month_Summary() {
+    let opts: PickerOptions = {
+      cssClass: 'academy-picker',
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Done'
+        }
+      ],
+      columns: [
+        {
+          name: 'Month',
+          options: [
+            { text: 'Month ', value: 'Month' },
+            { text: 'January ', value: 'January' },
+            { text: 'February ', value: 'February' },
+            { text: 'March ', value: 'March' },
+            { text: 'April ', value: 'April' },
+            { text: 'May ', value: 'May' },
+            { text: 'June ', value: 'June' },
+            { text: 'July ', value: 'July' },
+            { text: 'August ', value: 'August' },
+            { text: 'September ', value: 'September' },
+            { text: 'October ', value: 'October' },
+            { text: 'November ', value: 'November' },
+            { text: 'December ', value: 'December' }
+          ]
+        }
+      ]
+    };
+    let picker = await this.pickerCtrl.create(opts);
+    picker.present();
+    picker.onDidDismiss().then(async data => {
+      let Month = await picker.getColumn('Month');
+      this.Month = Month.options[Month.selectedIndex].value;
+    });
+  }
+
+  ngOnInit() {
+  }
+
+  async modal_addTransaction() {
+    const modal = await this.modalController.create({
+      component: AddTransactionPage,
+      componentProps: {
+        index: this.currentWalletIndex,
+      }
+    });
+
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      this.currentWalletIndex = detail.data;
+      console.log(`back from modal => ${this.currentWalletIndex}`);
+    }).then(() => {
+      return Promise.resolve(
+        this.calculateTotal()
+      );
+    }).then(() => {
+      return Promise.resolve(
+        this.load_transaction()
+      );
+    });
+
+    return await modal.present();
+  }
+
+  async modal_editTransaction(tranIndex) {
+    console.log(this.currentWalletIndex);
+    console.log(tranIndex);
+    const modal = await this.modalController.create({
+      component: EditTransactionPage,
+      componentProps: {
+        walletIndex: this.currentWalletIndex,
+        tranIndex: tranIndex,
+      }
+    });
+
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      this.currentWalletIndex = detail.data;
+    }).then(() => {
+      return Promise.resolve(
+        this.calculateTotal()
+      );
+    }).then(() => {
+      return Promise.resolve(
+        this.load_transaction()
+      );
+    });
+
+    return await modal.present();
+  }
+
+  async presentAlert(tran_id) {
+    const alert = await this.alertController.create({
+      header: 'Delete',
+      message: 'Confirm Delete',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancel');
+          }
+        }, {
+          text: 'Confirm',
+          role: 'confirm',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log(`Confirm id: ${tran_id}`);
+            var json = {
+              "tran_id": tran_id
+            };
+            this.databaseService.remove_transaction(json).subscribe(res => {
+              this.load_transaction();
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+  backPage() {
+    this.navCtrl.navigateBack('/home');
+  }
 
 }
