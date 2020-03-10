@@ -47,6 +47,7 @@ export class WalletDetailPage implements OnInit {
     });
   }
 
+  //for calculate
   calculateTotal() {
     console.log("In calculateTotal")
     this.totalBalance = 0;
@@ -67,6 +68,7 @@ export class WalletDetailPage implements OnInit {
     );
   }
 
+  
   ngOnInit() {
   }
 
