@@ -46,11 +46,19 @@ ion-toolbar {
 }
 
 .child-card-header {
-    --background: tranparent !important;
+    --background: white !important;
     --inner-border-width: 0px;
     ion-icon {
         color: white;
     }
+}
+
+.icon-white {
+    color: white !important;
+}
+
+.icon-black {
+    color: black !important;
 }
 
 .container {
@@ -159,4 +167,39 @@ ion-card-title {
 .bg-d-m-y {
     --background: rgb(245, 241, 241);
     --inner-border-width: 0px;
+}
+
+
+ion-title {
+    width: 100%;
+    padding: 0px;
+    padding-top: 16px;
+    text-align: center;
+    font-size: 20px !important;
+    vertical-align: text-bottom !important;
+}
+
+ion-segment {
+    --background: #861b748e;
+}
+
+ion-segment-button {
+    color: white;
+    --indicator-color: rgba(255, 255, 255, 0.514);
+}
+
+.content-card {
+    margin: 0px;
+}
+
+ion-item {
+    --background: white;
+}
+
+ion-row {
+    width: 100% !important;
+}
+
+.row_detail {
+    font-size: 17px !important;
 }
