@@ -68,8 +68,50 @@ export class WalletDetailPage implements OnInit {
     );
   }
 
-  
-  ngOnInit() {
+  //return date
+  dateHelper(date) {
+    var month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
+    return `${date.substr(8, 2)} ${month[parseInt(date.substr(5, 2)) - 1]} ${date.substr(0, 4)}`
+  }
+
+
+  format_transaction() {
+    this.tran_date = [];
+    this.tran_detail = [];
+    var tmp_date: any;
+    var tmp_tran = this.account.getWallet()[this.currentWalletIndex].transaction;
+    tmp_tran.forEach((val, index) => {
+      if (index == 0) {
+        tmp_date = val.getDateTime().substr(0, 10);
+        this.tran_detail.push({
+          "tran_id": val.getTransactionId(),
+          "tran_des": val.getDescription(),
+          "tran_amount": val.getAmount()
+        })
+      } else if (tmp_date == val.getDateTime().substr(0, 10)) {
+        this.tran_detail.push({
+          "tran_id": val.getTransactionId(),
+          "tran_des": val.getDescription(),
+          "tran_amount": val.getAmount()
+        })
+      } else {
+        this.tran_date.push({
+          "date": this.dateHelper(tmp_date),
+          "tran_detail": this.tran_detail
+        })
+        this.tran_detail = [];
+
+        tmp_date = val.getDateTime().substr(0, 10);
+        this.tran_detail.push({
+          "tran_id": val.getTransactionId(),
+          "tran_des": val.getDescription(),
+          "tran_amount": val.getAmount()
+        })
+      }
+
+
+
+    });
   }
 
 }
