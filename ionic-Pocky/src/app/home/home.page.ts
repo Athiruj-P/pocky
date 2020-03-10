@@ -115,7 +115,7 @@ export class HomePage {
       inputs: [
         {
           name: 'name',
-          placeholder: 'name'
+          placeholder: this.wallets[index].getWalletName()
         },
       
       ],
@@ -130,13 +130,25 @@ export class HomePage {
         {
           text: 'Confirm',
           handler: data => {
-          }
+            console.log(data.name);
+            console.log(this.wallrt[index]);
+            this.account.databaseService.rename_wallet_by_id({ wal_id: this.wallets[index].getId(), wal_name: data.name }).subscribe(res => {
+                this.wallets.splice(index, 1);
+          });
         }
+      }
       ]
     });
     alert.present();
+}
+
+  gotoPage(page, index) {
+    this.router.navigate([page], {
+      queryParams: { index: index }
+    });
   }
 
-
-
 }
+
+
+

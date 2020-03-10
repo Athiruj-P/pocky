@@ -145,9 +145,9 @@ app.post("wallet-remove-by-id", (req, res) => {
  * Author: Athiruj
  * Create date: 03/03/2020 
  */
-app.post("wallet-remove-by-id", (req, res) => {
+app.post("wallet-rename-by-id", (req, res) => {
   let sql = ` UPDATE wallet
-              SET wal_status = "${req.body.wal_id}"
+              SET wal_name = "${req.body.wal_name}"
               WHERE wal_id = "${req.body.wal_id}";`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
