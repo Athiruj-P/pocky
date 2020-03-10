@@ -36,6 +36,7 @@ export class WalletDetailPage implements OnInit {
   public segment = "transactions";
   private tran_date = [];
   private tran_detail = [];
+
   constructor(private alertController: AlertController, private navCtrl: NavController, private databaseService: DatabaseService, private account: Account, private pickerCtrl: PickerController, public modalController: ModalController, public activatedRoute: ActivatedRoute) {
     this.activatedRoute.queryParams.subscribe((res) => {
       this.currentWalletIndex = res.index;
@@ -43,37 +44,35 @@ export class WalletDetailPage implements OnInit {
       this.calculateTotal();
       this.load_transaction();
       // this.load_transaction();
-      console.log(this.account.getWallet()[res.index]);
-    });
+      console.log(this.account.getWallet()[res.index])
+    })
   }
 
-  //for calculate
   calculateTotal() {
     console.log("In calculateTotal")
     this.totalBalance = 0;
     this.account.getWallet()[this.currentWalletIndex].updateTotalBalance().then(
       (balance) => {
         this.totalBalance = balance;
+        // console.log("calculateTotal=> \n In 01 updateTotalBalance");
       }
     ).then(
       () => {
         var json = {
           wal_id: this.account.getWallet()[this.currentWalletIndex].getId(),
           wal_money: this.totalBalance
-        };
+        }
         this.account.databaseService.update_wallet_balance(json).subscribe(res => {
           // console.log(res)
         });
       }
-    );
+    )
   }
 
-  //return date
   dateHelper(date) {
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     return `${date.substr(8, 2)} ${month[parseInt(date.substr(5, 2)) - 1]} ${date.substr(0, 4)}`
   }
-
 
   format_transaction() {
     this.tran_date = [];
@@ -87,18 +86,18 @@ export class WalletDetailPage implements OnInit {
           "tran_id": val.getTransactionId(),
           "tran_des": val.getDescription(),
           "tran_amount": val.getAmount()
-        });
+        })
       } else if (tmp_date == val.getDateTime().substr(0, 10)) {
         this.tran_detail.push({
           "tran_id": val.getTransactionId(),
           "tran_des": val.getDescription(),
           "tran_amount": val.getAmount()
-        });
+        })
       } else {
         this.tran_date.push({
           "date": this.dateHelper(tmp_date),
           "tran_detail": this.tran_detail
-        });
+        })
         this.tran_detail = [];
 
         tmp_date = val.getDateTime().substr(0, 10);
@@ -106,25 +105,27 @@ export class WalletDetailPage implements OnInit {
           "tran_id": val.getTransactionId(),
           "tran_des": val.getDescription(),
           "tran_amount": val.getAmount()
-        });
+        })
       }
 
       if (tmp_tran.length - 1 == index) {
         this.tran_date.push({
           "date": this.dateHelper(tmp_date),
           "tran_detail": this.tran_detail
-        });
+        })
       }
 
-    });
+    })
+    console.log(this.tran_date)
   }
+
   load_transaction() {
     this.account.loadWallet(this.account.getWallet()[this.currentWalletIndex].getId()).then(
       (tran) => { this.account.getWallet()[this.currentWalletIndex].transaction = tran; }
     ).then(
-      () => { this.calculateTotal(); }
+      () => { this.calculateTotal() }
     ).then(
-      () => { this.format_transaction(); }
+      () => { this.format_transaction() }
     );
   }
 
@@ -156,7 +157,7 @@ export class WalletDetailPage implements OnInit {
     picker.present();
     picker.onDidDismiss().then(async data => {
       let Year = await picker.getColumn('Year');
-      this.Year = Year.options[Year.selectedIndex].value;
+      this.Year = Year.options[Year.selectedIndex].value
     });
   }
 
@@ -196,11 +197,16 @@ export class WalletDetailPage implements OnInit {
     picker.present();
     picker.onDidDismiss().then(async data => {
       let Month = await picker.getColumn('Month');
-      this.Month = Month.options[Month.selectedIndex].value;
+      this.Month = Month.options[Month.selectedIndex].value
     });
   }
 
   ngOnInit() {
+    // console.log("In ngOnInit");
+    // console.log("In ngOnInit \n call load_transaction");
+    // this.load_transaction();
+    // console.log("In ngOnInit \n call calculateTotal");
+    // this.calculateTotal();
   }
 
   async modal_addTransaction() {
@@ -222,19 +228,20 @@ export class WalletDetailPage implements OnInit {
       return Promise.resolve(
         this.load_transaction()
       );
-    });
+    })
 
     return await modal.present();
   }
 
-  async modal_editTransaction(tranIndex) {
-    console.log(this.currentWalletIndex);
-    console.log(tranIndex);
+  async modal_editTransaction(tran_id) {
+    console.log("modal_editTransaction")
+    console.log(this.currentWalletIndex)
+    console.log(tran_id)
     const modal = await this.modalController.create({
       component: EditTransactionPage,
       componentProps: {
         walletIndex: this.currentWalletIndex,
-        tranIndex: tranIndex,
+        tran_id: tran_id,
       }
     });
 
@@ -248,7 +255,7 @@ export class WalletDetailPage implements OnInit {
       return Promise.resolve(
         this.load_transaction()
       );
-    });
+    })
 
     return await modal.present();
   }
@@ -273,10 +280,10 @@ export class WalletDetailPage implements OnInit {
             console.log(`Confirm id: ${tran_id}`);
             var json = {
               "tran_id": tran_id
-            };
+            }
             this.databaseService.remove_transaction(json).subscribe(res => {
               this.load_transaction();
-            });
+            })
           }
         }
       ]
@@ -289,5 +296,4 @@ export class WalletDetailPage implements OnInit {
   backPage() {
     this.navCtrl.navigateBack('/home');
   }
-
 }
