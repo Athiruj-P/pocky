@@ -2,23 +2,19 @@
     <ion-header class="ion-no-border">
         <ion-toolbar>
             <ion-buttons slot="start">
-                <ion-back-button defaultHref="login" text="" icon="chevron-back-outline"></ion-back-button>
+                <ion-back-button defaultHref="home" text="" icon="chevron-back-outline"></ion-back-button>
             </ion-buttons>
-            <ion-title class="text-center" color="light">wallet_detail</ion-title>
         </ion-toolbar>
+        <ion-title color="light" mode="ios">{{walletName}}</ion-title>
     </ion-header>
 
     <ion-text color="light">
         <ion-row>
-            <ion-col>
-                <ion-card-content>
-                    <h1 class="font-size-17 text-left">Current Balance</h1>
-                </ion-card-content>
+            <ion-col size="7">
+                <h1 class="font-size-17 text-left">Current Balance</h1>
             </ion-col>
-            <ion-col>
-                <ion-card-content>
-                    <h1 class="font-size-17 text-right">{{totalBalance}} THB</h1>
-                </ion-card-content>
+            <ion-col size="5">
+                <h1 class="font-size-17 text-right">{{totalBalance.toLocaleString('en-US')}} THB</h1>
             </ion-col>
 
         </ion-row>
@@ -63,6 +59,7 @@
             </ion-row>
 
         </ion-text>
+        <br><br>
     </ion-card>
 
     <!-- Add transaction button -->
