@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css?family=Mitr&display=swap');
+ion-content {
+    --ion-background-color: linear-gradient(135deg, #EE7EB0, #756CB2);
+}
+
+.username-container {
+    h3 {
+        padding-left: 10px;
+        font-size: 20px;
+    }
+}
+
+ion-avatar {
+    max-width: 40px;
+    height: auto;
+}
+
+.btn-logout {
+    color: white;
+}
+
+.total-balance {
+    h1 {
+        font-size: 10vw;
+    }
+}
+
+.total-title {
+    h1 {
+        margin-top: 0px !important;
+        font-size: 25px;
+        font-weight: lighter;
+    }
+}
+
+ion-toolbar {
+    --background: tranparent;
+    padding-left: 20px;
+    ion-back-button {
+        color: white;
+    }
+}
+
+* {
+    font-family: Mitr;
+}
+
+.child-card-header {
+    --background: white !important;
+    --inner-border-width: 0px;
+    ion-icon {
+        color: white;
+    }
+}
+
+.icon-white {
+    color: white !important;
+}
+
+.icon-black {
+    color: black !important;
+}
+
+.container {
+    position: absolute;
+    --background: white;
+    width: 100% !important;
+    bottom: 0%;
+    height: 65vh;
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+    margin: 0 !important;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; // IE 10+
+    scrollbar-width: none; // Firefox
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+        display: none; // Safari and Chrome
+    }
+    .content {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+.child-card {
+    color: white;
+    --background: #672C72;
+    border-radius: 10px;
+    .pencil {
+        margin-left: 10px;
+        color: white;
+    }
+    ion-card-header {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    .balance {
+        text-align: end;
+        font-size: 20px;
+        color: #8DFFA0;
+    }
+    .time {
+        font-size: 20px;
+        color: black;
+    }
+}
+
+ion-card-title,
+ion-card-subtitle {
+    color: white;
+}
+
+ion-card-title {
+    font-size: 20px;
+}
+
+.fab {
+    z-index: 1000;
+    position: fixed;
+    bottom: 0%;
+    .btn-add-tran {
+        --background: #FFC31C;
+        --background-focused: rgb(206, 156, 19) !important;
+        --background-hover: rgb(206, 156, 19) !important;
+        --background-activated: rgb(206, 156, 19) !important;
+    }
+}
+
+.icon-wallet {
+    margin-right: 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-size-17 {
+    font-size: 17px;
+}
+
+.font-size-18 {
+    font-size: 18px;
+}
+
+.area-transaction {
+    background: white;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-color-red {
+    color: red;
+}
+
+.text-color-black {
+    color: black;
+}
+
+.bg-d-m-y {
+    --background: rgb(245, 241, 241);
+    --inner-border-width: 0px;
+}
+
+
+ion-title {
+    width: 100%;
+    padding: 0px;
+    padding-top: 16px;
+    text-align: center;
+    font-size: 20px !important;
+    vertical-align: text-bottom !important;
+}
+
+ion-segment {
+    --background: #861b748e;
+}
+
+ion-segment-button {
+    color: white;
+    --indicator-color: rgba(255, 255, 255, 0.514);
+}
+
+.content-card {
+    margin: 0px;
+}
+
+ion-item {
+    --background: white;
+}
+
+ion-row {
+    width: 100% !important;
+}
+
+.row_detail {
+    font-size: 17px !important;
+}
