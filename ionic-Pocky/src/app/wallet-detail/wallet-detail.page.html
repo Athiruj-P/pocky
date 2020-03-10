@@ -1,0 +1,168 @@
+<ion-content fullscreen>
+    <ion-header class="ion-no-border">
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-back-button defaultHref="home" text="" icon="chevron-back-outline"></ion-back-button>
+            </ion-buttons>
+        </ion-toolbar>
+        <ion-title color="light" mode="ios">{{walletName}}</ion-title>
+    </ion-header>
+
+    <ion-text color="light">
+        <ion-row>
+            <ion-col size="7">
+                <h1 class="font-size-17 text-left">Current Balance</h1>
+            </ion-col>
+            <ion-col size="5">
+                <h1 class="font-size-17 text-right">{{totalBalance.toLocaleString('en-US')}} THB</h1>
+            </ion-col>
+
+        </ion-row>
+    </ion-text>
+
+    <!-- Segment -->
+    <ion-segment mode="ios" [(ngModel)]="segment" value="transactions">
+        <ion-segment-button value="transactions">
+            <ion-label>Transactions</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="summary">
+            <ion-label>Summary</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+    <ion-card class="container">
+        <div [ngSwitch]="segment">
+            <ion-card mode="ios" class="child-card-header" *ngSwitchCase="'transactions'">
+                <ion-item-group *ngFor="let date of tran_date let i = index">
+                    <ion-item-divider mode="ios">
+                        <ion-label>
+                            {{date.date}}
+                        </ion-label>
+                    </ion-item-divider>
+
+                    <ion-item-sliding *ngFor="let datail of date.tran_detail let j = index">
+                        <ion-item>
+                            <ion-row justify-content-around>
+                                <ion-col size="6">
+                                    <h3 class="row_detail">{{datail.tran_des}}</h3>
+                                </ion-col>
+                                <ion-col size="6">
+                                    <div *ngIf="datail.tran_amount >= 0; else elseBlock">
+                                        <ion-text color="success">
+                                            <h5 class="row_detail ion-text-end">
+                                                {{datail.tran_amount.toLocaleString('en-US')+ " " + this.account.getWallet()[this.currentWalletIndex].getCurrency().getNameAbb()}}
+                                            </h5>
+                                        </ion-text>
+                                    </div>
+                                    <ng-template #elseBlock color="danger">
+                                        <ion-text color="danger">
+                                            <h3 class="row_detail ion-text-end">
+                                                {{datail.tran_amount.toLocaleString('en-US')+ " " + this.account.getWallet()[this.currentWalletIndex].getCurrency().getNameAbb()}}
+                                            </h3>
+                                        </ion-text>
+                                    </ng-template>
+                                </ion-col>
+                            </ion-row>
+                        </ion-item>
+                        <ion-item-options side="end">
+
+                            <ion-item-option color="warning" (click)="modal_editTransaction(j)">
+                                <ion-icon class="icon-white" slot="icon-only" name="create">
+                                </ion-icon>
+                            </ion-item-option>
+
+                            <ion-item-option color="danger" (click)="presentAlert(datail.tran_id)">
+                                <ion-icon class="icon-white" slot="icon-only" name="trash">
+                                </ion-icon>
+                            </ion-item-option>
+
+                        </ion-item-options>
+                    </ion-item-sliding>
+                </ion-item-group>
+                <div style="height: 200px;"></div>
+            </ion-card>
+
+            <ion-card class="child-card-header" *ngSwitchCase="'summary'">
+                <div style="height: 23px;"></div>
+                <!-- Year -->
+                <ion-toolbar>
+                    <ion-text>
+                        <ion-label position="floating">Year</ion-label>
+                    </ion-text>
+                    <ion-item>
+                        <ion-label color="Primary" (click)="Show_Year_Summary()">{{ Year }}</ion-label>
+                        <ion-button fill="clear" (click)="Show_Year_Summary()">
+                            <ion-icon class="icon-black" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+
+                    <!-- Month -->
+                    <ion-text>
+                        <ion-label position="floating">Month</ion-label>
+                    </ion-text>
+                    <ion-item>
+                        <ion-label color="Primary" (click)="Show_Month_Summary()">{{ Month }}</ion-label>
+                        <ion-button fill="clear" (click)="Show_Month_Summary()">
+                            <ion-icon class="icon-black" name="chevron-down-outline"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+                </ion-toolbar>
+
+                <!-- Total Income -->
+                <ion-item>
+                    <ion-label>
+                        <ion-row>
+                            <ion-col size="6">
+                                <ion-icon class="icon-black" name="card-outline"></ion-icon>
+                                <span>Total Income</span>
+                            </ion-col>
+                            <ion-col size="6" class="icon-black" class="totalIncome">
+                                <p>{{Income}} {{Currency}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-label>
+                </ion-item>
+
+                <!-- Total Expense -->
+                <ion-item>
+                    <ion-label>
+                        <ion-row>
+                            <ion-col size="6">
+                                <ion-icon class="icon-black" name="card-outline"></ion-icon>
+                                <span>Total Expense</span>
+                            </ion-col>
+                            <ion-col class="icon-black" class="totalExpense">
+                                <p>{{Expense}} {{Currency}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-label>
+                </ion-item>
+
+                <!-- Total Balance -->
+                <ion-item>
+                    <ion-label>
+                        <ion-row>
+                            <ion-col size="6">
+                                <ion-icon class="icon-black" name="card-outline"></ion-icon>
+                                <span>Total Balance</span>
+                            </ion-col>
+                            <ion-col class="icon-black" class="totalBalance">
+                                <p>{{Balance}} {{Currency}}</p>
+                            </ion-col>
+                        </ion-row>
+                    </ion-label>
+                </ion-item>
+            </ion-card>
+        </div>
+
+    </ion-card>
+
+    <!-- Add transaction button -->
+    <ion-col size="12" class="fab">
+        <ion-button  (click)="modal_addTransaction()"  expand="block" class="btn-add-tran" mode="ios">
+            <ion-icon class="icon-wallet" name="wallet"></ion-icon>
+            Add New Transaction
+        </ion-button>
+    </ion-col>
+
+</ion-content>

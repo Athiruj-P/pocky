@@ -1,55 +1,55 @@
 <ion-content fullscreen>
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col size="12" class="title-container">
-        <ion-text color="light">
-          <h1 class="title">Pocky</h1>
-        </ion-text>
-      </ion-col>
-    </ion-row>
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size="12" class="title-container">
+                <ion-text color="light">
+                    <h1 class="title">Pocky</h1>
+                </ion-text>
+            </ion-col>
+        </ion-row>
 
-    <ion-row>
-      <ion-col size="12" class="sub-title-container">
-        <ion-text color="light">
-          <h1 class="sub-title">Your Personal Pocket</h1>
-        </ion-text>
-      </ion-col>
-    </ion-row>
+        <ion-row>
+            <ion-col size="12" class="sub-title-container">
+                <ion-text color="light">
+                    <h1 class="sub-title">Your Personal Pocket</h1>
+                </ion-text>
+            </ion-col>
+        </ion-row>
 
-    <!-- Input username -->
-    <ion-row>
-      <ion-col offset="1" size="10">
-        <ion-input type="text" [(ngModel)]="username" placeholder="Username">
-          <ion-icon name="person-circle"></ion-icon>
-        </ion-input>
-      </ion-col>
-    </ion-row>
+        <!-- Input username -->
+        <ion-row>
+            <ion-col offset="1" size="10">
+                <ion-input type="text" [(ngModel)]="username" placeholder="Username">
+                    <ion-icon name="person-circle"></ion-icon>
+                </ion-input>
+            </ion-col>
+        </ion-row>
 
-    <!-- Input password -->
-    <ion-row>
-      <ion-col offset="1" size="10">
-        <ion-input type="password" [(ngModel)]="password" placeholder="Password">
-          <ion-icon name="key"></ion-icon>
-        </ion-input>
-      </ion-col>
-    </ion-row>
+        <!-- Input password -->
+        <ion-row>
+            <ion-col offset="1" size="10">
+                <ion-input type="password" [(ngModel)]="password" placeholder="Password">
+                    <ion-icon name="key"></ion-icon>
+                </ion-input>
+            </ion-col>
+        </ion-row>
 
-    <!-- Button login -->
-    <ion-row>
-      <ion-col size="12">
-        <!-- <ion-button (click)="gotoPage('home')" class="btn-login" mode="ios" color="light">LOGIN</ion-button> -->
-        <ion-button (click)="login()" class="btn-login" mode="ios" color="light">LOGIN</ion-button>
-      </ion-col>
-    </ion-row>
+        <!-- Button login -->
+        <ion-row>
+            <ion-col size="12">
+                <!-- <ion-button (click)="gotoPage('home')" class="btn-login" mode="ios" color="light">LOGIN</ion-button> -->
+                <ion-button (click)="login()" class="btn-login" mode="ios" color="light">LOGIN</ion-button>
+            </ion-col>
+        </ion-row>
 
-    <!-- Button register -->
-    <ion-row>
-      <ion-col size="12">
-        <ion-text color="light">
-          <h1 (click)="gotoPage('register')" class="regis-text">REGISTER?</h1>
-        </ion-text>
-      </ion-col>
-    </ion-row>
+        <!-- Button register -->
+        <ion-row>
+            <ion-col size="12">
+                <ion-text color="light">
+                    <h1 (click)="gotoPage('register')" class="regis-text">REGISTER?</h1>
+                </ion-text>
+            </ion-col>
+        </ion-row>
 
-  </ion-grid>
+    </ion-grid>
 </ion-content>
