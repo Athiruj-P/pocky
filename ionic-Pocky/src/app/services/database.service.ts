@@ -39,7 +39,7 @@ export class DatabaseService {
   }
 
   get_transaction_by_wal_id(json) {
-    return this.http.post(`${this.url}/transaction-get-by-id`, json).map(res => res.json());
+    return this.http.post(`${this.url}/transaction-get-all-by-id`, json).map(res => res.json());
   }
 
   get_all_currency() {
@@ -53,4 +53,30 @@ export class DatabaseService {
   rename_wallet_by_id(json) {
     return this.http.post(`${this.url}/wallet-rename-by-id`, json).map(res => res.json());
   }
+
+  update_wallet_balance(json) {
+    console.log("in service update_wallet_balance")
+    return this.http.post(`${this.url}/wallet-set-balance-by-id`, json).map(res => res.json());
+  }
+
+  add_transaction(json) {
+    return this.http.post(`${this.url}/transaction-add`, json).map(res => res.json());
+  }
+
+  edit_transaction(json) {
+    return this.http.post(`${this.url}/transaction-edit-by-id`, json).map(res => res.json());
+  }
+
+  remove_transaction(json) {
+    return this.http.post(`${this.url}/transaction-remove-by-id`, json).map(res => res.json());
+  }
+
+  show_transaction(json) {
+    return this.http.post(`${this.url}/transaction-remove-by-id`, json).map(res => res.json());
+  }
+
+  get_all_transaction_by_id(json) {
+    return this.http.post(`${this.url}/transaction-get-all-by-id`, json).map(res => res.json());
+  }
+
 }

@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 var bodyParser = require("body-parser");
+var dateTime = require('./dateTime');
 
 app.use(bodyParser.json());
 app.use(
@@ -54,11 +55,14 @@ db.connect(function (err) {
 app.post("/account-register", (req, res) => {
   let sql = `
     INSERT INTO account (ac_username,ac_password)
-    VALUES ("${req.body.username}","${req.body.password}");
-  `
+    VALUES ("${req.body.username}","${req.body.password}");`
   let query = db.query(sql, (err, result) => {
     if (err) throw err;
-    res.json(result);
+    let sql = ` SELECT ac_id FROM account WHERE ac_username = '${req.body.username}';`
+    query = db.query(sql, (err, result) => {
+      if (err) throw err;
+      res.json(result);
+    });
   });
 })
 
@@ -68,7 +72,7 @@ app.post("/account-register", (req, res) => {
  * Input: username password
  * Output:
  * Author: Athiruj
- * Create date: 25/02/2020 
+ * Create date: 25/02/2020
  */
 app.get("/account-get-all", (req, res) => {
   let sql = ` SELECT * FROM account ;`;
@@ -216,6 +220,102 @@ app.post("/wallet-rename-by-id", (req, res) => {
   let sql = ` UPDATE wallet
               SET wal_name ="${req.body.wal_name}"
               WHERE wal_id ="${req.body.wal_id}";`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Update wallet's balance
+ * To update wallet's balance
+ * Input: wal_id , wal_money
+ * Output: -
+ * Author: Athiruj
+ * Create date: 03/03/2020 
+ */
+app.post("/wallet-set-balance-by-id", (req, res) => {
+  let sql = ` UPDATE wallet
+              SET wal_money ="${req.body.wal_money}"
+              WHERE wal_id ="${req.body.wal_id}";`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Add transaction
+ * To add new transaction for the wallet 
+ * Input: tran_name tran_name tran_date tran_wal_id tran_status
+ * Output: -
+ * Author: Athiruj
+ * Create date: 07/03/2020
+ */
+app.post("/transaction-add", (req, res) => {
+  let sql = ` INSERT INTO transaction (tran_name,tran_type,tran_amount,tran_date,tran_wal_id)
+              VALUES ("${req.body.tran_name}","${req.body.tran_type}","${req.body.tran_amount}","${dateTime.dateTime()}","${req.body.tran_wal_id}");`;
+  let query = db.query(sql, (err, val) => {
+    if (err) throw err;
+    let sql = ` SELECT * FROM transaction WHERE tran_id = '${val.insertId}';`
+    query = db.query(sql, (err, result) => {
+      if (err) throw err;
+      res.json(result);
+    });
+  });
+});
+
+/**
+ * get all transaction by wal_id
+ * To all transaction of the wallet 
+ * Input: wal_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 07/03/2020 
+ */
+app.post("/transaction-get-all-by-id", (req, res) => {
+  let sql = ` SELECT * FROM transaction
+              WHERE tran_wal_id = "${req.body.wal_id}"
+              AND tran_status = 'Y'
+              ORDER BY tran_date DESC;`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Update transaction by tran_id
+ * To change a value of transaction's attribute
+ * Input: tran_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 07/03/2020 
+ */
+app.post("/transaction-edit-by-id", (req, res) => {
+  let sql = ` UPDATE transaction
+              SET tran_name ="${req.body.tran_name}",
+                  tran_type  ="${req.body.tran_type}",
+                  tran_amount ="${req.body.tran_amount}"
+              WHERE tran_id ="${req.body.tran_id}"; `;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Remove transaction by id
+ * To remove transaction by id
+ * Input: tran_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 03/03/2020 
+ */
+app.post("/transaction-remove-by-id", (req, res) => {
+  let sql = ` UPDATE transaction
+              SET tran_status = 'N'
+              WHERE tran_id ='${req.body.tran_id}';`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
