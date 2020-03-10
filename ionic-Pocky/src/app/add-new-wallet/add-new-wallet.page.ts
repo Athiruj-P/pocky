@@ -5,9 +5,7 @@ import { map } from 'rxjs/operators';
 
 // import { AddQueueTypePage } from '../add-queue-type/add-queue-type.page';
 import { ToastController } from '@ionic/angular';
-import { Account } from '../pattern.component';
-import { PersonalWallet } from '../pattern.component';
-import { Currency } from '../pattern.component';
+import { Account, Income, PersonalWallet, Currency } from '../pattern.component';
 @Component({
   selector: 'app-add-new-wallet',
   templateUrl: './add-new-wallet.page.html',
@@ -42,16 +40,35 @@ export class AddNewWalletPage implements OnInit {
       "wal_ac_id": this.account.getId(),
       "wal_cur_id": this.currency
     }
-    this.databaseService.add_wallet(json).subscribe(res => {
+    this.databaseService.add_wallet(json).subscribe(res_wallet => {
       var tmpWal = new PersonalWallet;
       var tmpCurrency = new Currency;
-      tmpCurrency.setName(this.option_currency[this.currency-1].cur_name);
-      tmpCurrency.setNameAbb(this.option_currency[this.currency-1].cur_name_abb);
-      tmpWal.setId(this.account.getId);
+      var tmpTran = new Income;
+      var json = {
+        "tran_name": "Initial balance",
+        "tran_amount": this.money,
+        "tran_wal_id": res_wallet.insertId,
+        "tran_status": "Y",
+        "tran_type": 1
+      }
+      tmpCurrency.setName(this.option_currency[this.currency - 1].cur_name);
+      tmpCurrency.setNameAbb(this.option_currency[this.currency - 1].cur_name_abb);
+      tmpWal.setId(res_wallet.insertId);
       tmpWal.setWalletName(this.name);
       tmpWal.setCurrency(tmpCurrency);
       tmpWal.setTotalBalance(this.money);
       this.account.setWallet(tmpWal);
+
+      tmpTran.setAmount(this.money);
+      tmpTran.setDescription("Initial balance");
+
+      this.account.databaseService.add_transaction(json).subscribe((res) => {
+        tmpTran.setTransactionId(res[0].tran_id);
+        tmpTran.setDateTime(res[0].tran_date);
+        tmpWal.addTransaction(tmpTran);
+        this.closeModal();
+      });
+
       console.log(this.account.getWallet());
       this.closeModal();
     })
