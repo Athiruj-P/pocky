@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Mitr&display=swap');
+
 ion-content {
     --ion-background-color: linear-gradient(135deg, #EE7EB0, #756CB2);
 }
@@ -36,6 +37,7 @@ ion-avatar {
 ion-toolbar {
     --background: tranparent;
     padding-left: 20px;
+
     ion-back-button {
         color: white;
     }
@@ -48,9 +50,11 @@ ion-toolbar {
 .child-card-header {
     --background: white !important;
     --inner-border-width: 0px;
-    ion-icon {
-        color: white;
-    }
+    margin: 0px;
+
+    // ion-icon {
+    //     color: black !important;
+    // }
 }
 
 .icon-white {
@@ -75,9 +79,11 @@ ion-toolbar {
     -ms-overflow-style: none; // IE 10+
     scrollbar-width: none; // Firefox
     scroll-behavior: smooth;
+
     &::-webkit-scrollbar {
         display: none; // Safari and Chrome
     }
+
     .content {
         padding-left: 10px;
         padding-right: 10px;
@@ -88,19 +94,23 @@ ion-toolbar {
     color: white;
     --background: #672C72;
     border-radius: 10px;
+
     .pencil {
         margin-left: 10px;
         color: white;
     }
+
     ion-card-header {
         padding-top: 0px;
         padding-bottom: 0px;
     }
+
     .balance {
         text-align: end;
         font-size: 20px;
         color: #8DFFA0;
     }
+
     .time {
         font-size: 20px;
         color: black;
@@ -120,6 +130,7 @@ ion-card-title {
     z-index: 1000;
     position: fixed;
     bottom: 0%;
+
     .btn-add-tran {
         --background: #FFC31C;
         --background-focused: rgb(206, 156, 19) !important;
@@ -168,7 +179,6 @@ ion-card-title {
     --background: rgb(245, 241, 241);
     --inner-border-width: 0px;
 }
-
 
 ion-title {
     width: 100%;

@@ -66,7 +66,8 @@
                         </ion-item>
                         <ion-item-options side="end">
 
-                            <ion-item-option color="warning" (click)="modal_editTransaction(j)">
+                            <ion-item-option color="warning">
+                            <!-- <ion-item-option color="warning" (click)="modal_editTransaction(datail.tran_id)"> -->
                                 <ion-icon class="icon-white" slot="icon-only" name="create">
                                 </ion-icon>
                             </ion-item-option>
@@ -159,7 +160,7 @@
 
     <!-- Add transaction button -->
     <ion-col size="12" class="fab">
-        <ion-button  (click)="modal_addTransaction()"  expand="block" class="btn-add-tran" mode="ios">
+        <ion-button (click)="modal_addTransaction()" expand="block" class="btn-add-tran" mode="ios">
             <ion-icon class="icon-wallet" name="wallet"></ion-icon>
             Add New Transaction
         </ion-button>

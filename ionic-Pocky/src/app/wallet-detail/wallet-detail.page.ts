@@ -233,32 +233,32 @@ export class WalletDetailPage implements OnInit {
     return await modal.present();
   }
 
-  async modal_editTransaction(tran_id) {
-    console.log("modal_editTransaction")
-    console.log(this.currentWalletIndex)
-    console.log(tran_id)
-    const modal = await this.modalController.create({
-      component: EditTransactionPage,
-      componentProps: {
-        walletIndex: this.currentWalletIndex,
-        tran_id: tran_id,
-      }
-    });
+  // async modal_editTransaction(tran_id) {
+  //   console.log("modal_editTransaction")
+  //   console.log(this.currentWalletIndex)
+  //   console.log(tran_id)
+  //   const modal = await this.modalController.create({
+  //     component: EditTransactionPage,
+  //     componentProps: {
+  //       walletIndex: this.currentWalletIndex,
+  //       tran_id: tran_id,
+  //     }
+  //   });
 
-    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      this.currentWalletIndex = detail.data;
-    }).then(() => {
-      return Promise.resolve(
-        this.calculateTotal()
-      );
-    }).then(() => {
-      return Promise.resolve(
-        this.load_transaction()
-      );
-    })
+  //   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+  //     this.currentWalletIndex = detail.data;
+  //   }).then(() => {
+  //     return Promise.resolve(
+  //       this.calculateTotal()
+  //     );
+  //   }).then(() => {
+  //     return Promise.resolve(
+  //       this.load_transaction()
+  //     );
+  //   })
 
-    return await modal.present();
-  }
+  //   return await modal.present();
+  // }
 
   async presentAlert(tran_id) {
     const alert = await this.alertController.create({
