@@ -1,42 +1,53 @@
 <ion-content fullscreen>
+  <!-- header start -->
   <ion-header class="ion-no-border">
     <ion-toolbar>
-      <ion-title>Add Transaction</ion-title>
-
-      <ion-buttons slot="end">
-        <ion-buttons (click)="closeModal()">
-          <ion-icon slot="icon-only" name="close"></ion-icon>
-        </ion-buttons>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="wallet-detail" (click)="closeModal()" text="" icon="chevron-back-outline">
+        </ion-back-button>
       </ion-buttons>
     </ion-toolbar>
-
-    <br>
-
-    <ion-segment (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="Expenses">
-        <ion-label>Expenses</ion-label>
-      </ion-segment-button>
-
-      <ion-segment-button value="Income">
-        <ion-label>Income</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-
+    <ion-title color="light" mode="ios">Add Transaction</ion-title>
   </ion-header>
+  <!-- header end -->
+  <!-- segment start -->
+  <ion-segment [(ngModel)]="segment" value="Expenses" mode="ios">
+    <ion-segment-button value="Expenses">
+      <ion-label>Expenses</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="Income">
+      <ion-label>Income</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <!-- segment end -->
+
 
   <ion-card class="container">
     <ion-card-content class="content">
-      <br> <br> <br>
 
-      &nbsp;&nbsp; Initial Balance
+      <!-- input start -->
       <ion-item>
-        <ion-input type="text"></ion-input>
+        <ion-label position="floating">Intial Balance</ion-label>
+        <ion-input [(ngModel)]="balance" type="number"></ion-input>
       </ion-item>
-      <br> <br> <br>
-     <ion-item>
-        <textarea ></textarea>
-     </ion-item>
-   
+      <!-- input end -->
+
+      <!-- note start -->
+      <ion-item>
+        <ion-label position="floating">Notes</ion-label>
+        <ion-input [(ngModel)]="note" type="text"></ion-input>
+      </ion-item>
+      <!-- note end -->
+
     </ion-card-content>
   </ion-card>
+  <!-- Add Transaction button start -->
+  <ion-col size="12" class="fab">
+    <ion-buttons (click)="addTransaction()" expand="block" class="btn-add-tran" mode="ios">
+      <ion-icon class="icon-wallet" name="card-outline"></ion-icon>
+      Add Transaction
+    </ion-buttons>
+  </ion-col>
+  <!-- Add Transaction button end -->
 </ion-content>
