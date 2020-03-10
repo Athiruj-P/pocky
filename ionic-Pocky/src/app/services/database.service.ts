@@ -39,7 +39,7 @@ export class DatabaseService {
   }
 
   get_transaction_by_wal_id(json) {
-    return this.http.post(`${this.url}/transaction-get-all-by-id`, json).map(res => res.json());
+    return this.http.post(`${this.url}/transaction-get-all-by-wal-id`, json).map(res => res.json());
   }
 
   get_all_currency() {
@@ -75,8 +75,12 @@ export class DatabaseService {
     return this.http.post(`${this.url}/transaction-remove-by-id`, json).map(res => res.json());
   }
 
-  get_all_transaction_by_id(json) {
-    return this.http.post(`${this.url}/transaction-get-all-by-id`, json).map(res => res.json());
+  get_all_transaction_by_wal_id(json) {
+    return this.http.post(`${this.url}/transaction-get-all-by-wal-id`, json).map(res => res.json());
+  }
+
+  get_transaction_by_tran_id(json) {
+    return this.http.post(`${this.url}/transaction-get-by-tran-id`, json).map(res => res.json());
   }
 
 }

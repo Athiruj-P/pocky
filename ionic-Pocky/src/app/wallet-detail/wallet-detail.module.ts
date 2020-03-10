@@ -6,7 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { WalletDetailPageRoutingModule } from './wallet-detail-routing.module';
 import { WalletDetailPage } from './wallet-detail.page';
 
-import { AddTransactionPage } from '../add-transaction/add-transaction.page';
+// import { AddTransactionPage } from '../add-transaction/add-transaction.page';
 
 @NgModule({
   imports: [
@@ -15,8 +15,8 @@ import { AddTransactionPage } from '../add-transaction/add-transaction.page';
     IonicModule,
     WalletDetailPageRoutingModule
   ],
-  declarations: [WalletDetailPage, AddTransactionPage],
-  entryComponents:[AddTransactionPage]
+  declarations: [WalletDetailPage],
+  entryComponents:[]
 })
 export class WalletDetailPageModule {
 

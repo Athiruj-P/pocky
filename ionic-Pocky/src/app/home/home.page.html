@@ -1,62 +1,66 @@
 <ion-content fullscreen>
     <!-- Header -->
     <ion-header class="ion-no-border">
-        <!-- Avater and userame -->
-        <ion-toolbar>
-            <ion-avatar slot="start">
-                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-            </ion-avatar>
-            <ion-text class="username-container" color="light">
-                <h3>{{username}}</h3>
-            </ion-text>
-            <!-- End Avater and userame -->
-
-            <!-- Logout button -->
-            <ion-buttons slot="end">
-                <ion-button (click)="backPage()">
-                    <ion-icon class="btn-logout" size="large" name="log-out-outline"></ion-icon>
-                </ion-button>
-            </ion-buttons>
-
-        </ion-toolbar>
+      <!-- Avater and userame -->
+      <ion-toolbar>
+        <ion-avatar slot="start">
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+        <ion-text class="username-container" color="light">
+          <h3>{{username}}</h3>
+        </ion-text>
+        <!-- End Avater and userame -->
+  
+        <!-- Logout button -->
+        <ion-buttons slot="end">
+          <ion-button (click)="backPage()">
+            <ion-icon class="btn-logout" size="large" name="log-out-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+  
+      </ion-toolbar>
     </ion-header>
-
+  
     <!-- Show total balance -->
     <ion-text class="total-title" color="light">
-        <h1 class="text-center">Total balance</h1>
+      <h1 class="text-center">Total balance</h1>
     </ion-text>
     <ion-text class="total-balance" color="light">
-        <h1 class="text-center">{{totalBalance}} THB</h1>
+      <h1 class="text-center">{{totalBalance.toLocaleString('en-US')}} THB</h1>
     </ion-text>
-
+  
     <ion-card class="container">
-        <!-- Start child card(s) -->
-        <ion-card-content class="content">
-            <ion-card class="child-card" mode="md" *ngFor="let wallet of wallets let i = index">
-                <ion-item class="child-card-header">
-                    <ion-text color="light">{{wallet.name}}</ion-text>
-                    <ion-icon class="pencil" name="pencil"></ion-icon>
-                    <ion-icon (click)="cardAction(i)" name="ellipsis-horizontal" slot="end"></ion-icon>
-                </ion-item>
-
-                <ion-card-header>
-                    <ion-card-subtitle>Current balance</ion-card-subtitle>
-                </ion-card-header>
-                <ion-card-content class="balance">
-                    {{wallet.balance}} {{wallet.currency}}
-                </ion-card-content>
-            </ion-card>
-            <!-- End child card(s) -->
-        </ion-card-content>
-        <div style="height: 50px;"></div>
+      <!-- Start child card(s) -->
+      <ion-card-content class="content">
+        <ion-card class="child-card"  mode="md" *ngFor="let wallet of wallets let i = index">
+          <ion-item class="child-card-header">
+            <ion-text color="light">{{wallet.getWalletName()}}</ion-text>
+            <ion-icon class="pencil" name="pencil" (click)="this.presentPrompt(i)"></ion-icon>
+            <ion-icon (click)="cardAction(i)" name="ellipsis-horizontal" slot="end"></ion-icon>
+          </ion-item>
+            <div (click)="gotoPage('wallet-detail',i)">
+  
+              <ion-card-header>
+                <ion-card-subtitle>Current balance</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content class="balance">
+                {{wallet.getTotalBalance().toLocaleString('en-US')}} {{wallet.getCurrency().getNameAbb()}}
+              </ion-card-content>
+            </div>
+  
+        </ion-card>
+        <!-- End child card(s) -->
+      </ion-card-content>
+      <div style="height: 50px;"></div>
     </ion-card>
-
+  
     <!-- Add transaction button -->
     <ion-col size="12" class="fab">
-        <ion-button expand="block" class="btn-add-tran" mode="ios">
-            <ion-icon class="icon-wallet" name="wallet"></ion-icon>
-            Add New Wallet
-        </ion-button>
+      <ion-button (click)="showModel()" expand="block" class="btn-add-tran" mode="ios">
+        <ion-icon class = "icon-wallet" name="wallet"></ion-icon>
+        Add New Wallet
+      </ion-button>
     </ion-col>
-
-</ion-content>
+  
+  </ion-content>
+  

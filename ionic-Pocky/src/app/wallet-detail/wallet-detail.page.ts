@@ -3,7 +3,7 @@ import { PickerOptions, OverlayEventDetail } from '@ionic/core';
 import { AlertController, NavController, ModalController, PickerController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddTransactionPage } from '../add-transaction/add-transaction.page';
-import { EditTransactionPage } from '../edit-transaction/edit-transaction.page';
+// import { EditTransactionPage } from '../edit-transaction/edit-transaction.page';
 import { DatabaseService } from 'src/app/services/database.service';
 /**
  * Import classes from pattern.component.ts
