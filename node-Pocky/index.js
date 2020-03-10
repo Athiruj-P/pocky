@@ -157,16 +157,16 @@ app.post("/wallet-add", (req, res) => {
 })
 
 /**
- * Get wallet's transaction(s)
- * To get all transaction of the wallet
- * Input: wal_id
- * Output: wallet
+ * Get transaction by tran id
+ * To get a transaction of the wallet
+ * Input: tran_id
+ * Output: transaction
  * Author: Athiruj
  * Create date: 02/03/2020 
  */
-app.post("/transaction-get-by-id", (req, res) => {
+app.post("/transaction-get-by-tran-id", (req, res) => {
   let sql = ` SELECT * FROM transaction 
-              WHERE tran_wal_id = '${req.body.wal_id}';`;
+              WHERE tran_id = '${req.body.tran_id}';`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -273,7 +273,7 @@ app.post("/transaction-add", (req, res) => {
  * Author: Athiruj
  * Create date: 07/03/2020 
  */
-app.post("/transaction-get-all-by-id", (req, res) => {
+app.post("/transaction-get-all-by-wal-id", (req, res) => {
   let sql = ` SELECT * FROM transaction
               WHERE tran_wal_id = "${req.body.wal_id}"
               AND tran_status = 'Y'
@@ -316,6 +316,25 @@ app.post("/transaction-remove-by-id", (req, res) => {
   let sql = ` UPDATE transaction
               SET tran_status = 'N'
               WHERE tran_id ='${req.body.tran_id}';`;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * get years for option
+ * To all transaction of the wallet 
+ * Input: wal_id
+ * Output: -
+ * Author: Athiruj
+ * Create date: 07/03/2020 
+ */
+app.post("/transaction-get-all-by-wal-id", (req, res) => {
+  let sql = ` SELECT * FROM transaction
+              WHERE tran_wal_id = "${req.body.wal_id}"
+              AND tran_status = 'Y'
+              ORDER BY tran_date DESC;`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
