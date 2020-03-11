@@ -55,6 +55,33 @@ export class SummaryPage implements OnInit {
 
   }
 
+  async Show_Year_Summary() {
+    let opts: PickerOptions = {
+      cssClass: 'academy-picker',
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Done'
+        }
+      ],
+      columns: [
+        {
+          name: 'Year',
+          options: this.arr_option
+        }
+      ]
+    };
+    let picker = await this.pickerCtrl.create(opts);
+    picker.present();
+    picker.onDidDismiss().then(async data => {
+      let Year = await picker.getColumn('Year');
+      this.Year = Year.options[Year.selectedIndex].value;
+      this.get_summary_detail();
+    });
+  }
+
   async Show_Month_Summary() {
     let opts: PickerOptions = {
       cssClass: 'academy-picker',
@@ -90,8 +117,36 @@ export class SummaryPage implements OnInit {
     picker.present();
     picker.onDidDismiss().then(async data => {
       let Month = await picker.getColumn('Month');
-      this.Month = Month.options[Month.selectedIndex].value;
+      this.Month = Month.options[Month.selectedIndex].value
+      this.get_summary_detail();
     });
+  }
+
+  get_summary_detail(){
+    this.Income = 0;
+    this.Expense = 0;
+    var tmp_month = "";
+    var str_date = "";
+    var tmp_index = this.arr_month.indexOf(this.Month)+1;
+    if(tmp_index){
+      tmp_month = tmp_index != 12? `0${tmp_index.toString()}` : tmp_index.toString();
+      str_date = `${this.Year}-${tmp_month}`;
+      console.log(str_date);
+      var json = {"wal_id":5 , "date":str_date};
+      this.databaseService.get_TotalIncome(json).subscribe(res => {
+        if(Object.keys(res).length > 0){
+          console.log(res[0].TotalIncome)
+          this.Income = res[0].TotalIncome.toLocaleString('en-US');
+        }
+      });
+  
+      this.databaseService.get_TotalExpense(json).subscribe(res => {
+        if(Object.keys(res).length > 0){
+          console.log(res[0].TotalExpense)
+          this.Expense = res[0].TotalExpense.toLocaleString('en-US');
+        }
+      });
+    }
   }
 
   ngOnInit() {
