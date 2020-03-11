@@ -88,6 +88,7 @@ export class StatOverviewPage implements OnInit {
   }
 
   guageChartMethod() {
+    var speed = 250
     this.gaugeChart = new Chart(this.gaugeArea.nativeElement, {
       // The type of chart we want to create
       type: 'doughnut',
@@ -99,6 +100,7 @@ export class StatOverviewPage implements OnInit {
           label: "My First dataset",
           backgroundColor: ['green', 'red'],
           borderColor: '#fff',
+          weight: 5,
           data: [300, 847],
         }]
       },
@@ -107,8 +109,17 @@ export class StatOverviewPage implements OnInit {
       options: {
         circumference: 1 * Math.PI,
         rotation: 1 * Math.PI,
-        cutoutPercentage: 90
+        cutoutPercentage: 90,
+        animation: {
+          duration: speed * 1.5,
+          easing: 'linear'
+        },
+        hover: {
+          animationDuration: 100 // duration of animations when hovering an item
+        },
+        responsiveAnimationDuration: 0 
       }
     });
+
   }
 }
