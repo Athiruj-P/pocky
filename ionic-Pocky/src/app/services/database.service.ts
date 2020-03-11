@@ -83,4 +83,16 @@ export class DatabaseService {
     return this.http.post(`${this.url}/transaction-get-by-tran-id`, json).map(res => res.json());
   }
 
+  get_year(json) {
+    return this.http.post<any>(`${this.url}/summary-get-year`, json);
+  }
+
+  get_TotalIncome(json) {
+    return this.http.post<any>(`${this.url}/summary-get-TotalIncome`, json);
+  }
+
+  get_TotalExpense(json) {
+    return this.http.post<any>(`${this.url}/summary-get-TotalExpense`, json);
+  }
+
 }
