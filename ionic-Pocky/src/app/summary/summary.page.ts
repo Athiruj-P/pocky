@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { PickerController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
+import { DatabaseService } from 'src/app/services/database.service';
+
+/**
+ * Import classes from pattern.component.ts
+ * เข้าถึงคลาสต่าง ๆ ที่ต้องใช้ โดยกำหนดชื่อของคลาสที่ต้องการ
+ * Author: Athiruj Poositaporn
+ * Create date: 28/02/2020
+ */
+import { Account } from '../pattern.component';
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.page.html',
@@ -12,45 +21,38 @@ export class SummaryPage implements OnInit {
   Year = 'Year';
   Month = 'Month';
   Current = '300.00';
-  Income = '500.00';
-  Expense = '200.00';
-  Balance = '300.00';
+  Income = 0;
+  Expense = 0;
   Currency = 'THB';
+  arr_option = [];
+  arr_month = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
   
-  constructor(private pickerCtrl: PickerController) { 
+  constructor(private pickerCtrl: PickerController, private account: Account, private databaseService: DatabaseService) { 
     this.sDefaultEmail = 'example@gmail.com';
-  }
+    var json = {
+      "wal_id" : 5,
+      "date" : "2020-03"
+    }
 
-  async Show_Year_Summary() {
-    let opts: PickerOptions = {
-      cssClass: 'academy-picker',
-      buttons: [
-        {
-          text: 'Cancel'
-        },
-        {
-          text: 'Done'
-        }
-      ],
-      columns: [
-        {
-          name: 'Year',
-          options: [
-            { text: 'Year ', value: 'Year' },
-            { text: '2017 ', value: '2017' },
-            { text: '2018 ', value: '2018' },
-            { text: '2019 ', value: '2019' },
-            { text: '2020 ', value: '2020' }
-          ]
-        }
-      ]
-    };
-    let picker = await this.pickerCtrl.create(opts);
-    picker.present();
-    picker.onDidDismiss().then(async data => {
-      let Year = await picker.getColumn('Year');
-      this.Year = Year.options[Year.selectedIndex].value
-    });
+    databaseService.get_year({"wal_id":5}).subscribe(res=>{
+      res.forEach(val => {
+        this.arr_option.push({text:val.Year , value:val.Year});
+      });
+    })
+
   }
 
   async Show_Month_Summary() {
@@ -68,7 +70,6 @@ export class SummaryPage implements OnInit {
         {
           name: 'Month',
           options: [
-            { text: 'Month ', value: 'Month' },
             { text: 'January ', value: 'January' },
             { text: 'February ', value: 'February' },
             { text: 'March ', value: 'March' },
@@ -89,7 +90,7 @@ export class SummaryPage implements OnInit {
     picker.present();
     picker.onDidDismiss().then(async data => {
       let Month = await picker.getColumn('Month');
-      this.Month = Month.options[Month.selectedIndex].value
+      this.Month = Month.options[Month.selectedIndex].value;
     });
   }
 

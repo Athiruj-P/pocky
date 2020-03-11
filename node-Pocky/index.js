@@ -117,3 +117,54 @@ app.post("/account-get-username", (req, res) => {
 app.listen(3000, () => {
   console.log("Start server at port 3000.");
 });
+
+/**
+ * Get an year by wal_id, date
+ * To get an summary of TotalIncome
+ * Input: wal_id, date
+ * Output: SUM(tran_amount)
+ * Author: Wannapa
+ * Create date: 11/03/2020 
+ */
+app.post("/summary-get-year", (req, res) => {
+  let sql = ` SELECT distinct YEAR(tran_date) AS Year FROM transaction
+              WHERE tran_wal_id = '${req.body.wal_id}' AND tran_status = 'Y' `;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Get an income by wal_id, date
+ * To get an summary of TotalIncome
+ * Input: wal_id, date
+ * Output: SUM(tran_amount)
+ * Author: Wannapa
+ * Create date: 11/03/2020 
+ */
+app.post("/summary-get-TotalIncome", (req, res) => {
+  let sql = ` SELECT SUM(tran_amount) AS TotalIncome FROM transaction
+              WHERE tran_type = 1 AND tran_wal_id = '${req.body.wal_id}' AND tran_date LIKE '${req.body.date}%' `;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
+
+/**
+ * Get an expense by wal_id, date
+ * To get an summary of TotalExpense
+ * Input: wal_id, date
+ * Output: SUM(tran_amount)
+ * Author: Wannapa
+ * Create date: 11/03/2020 
+ */
+app.post("/summary-get-TotalExpense", (req, res) => {
+  let sql = ` SELECT SUM(tran_amount) AS TotalExpense FROM transaction
+              WHERE tran_type = 2 AND tran_wal_id = '${req.body.wal_id}' AND tran_date LIKE '${req.body.date}%' `;
+  let query = db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
+});
