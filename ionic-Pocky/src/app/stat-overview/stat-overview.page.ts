@@ -33,13 +33,13 @@ export class StatOverviewPage implements OnInit {
             fill: false,
             lineTension: 0.1,
             backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgb(51, 205, 95)',
+            borderColor: 'green',
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
             pointBorderColor: 'rgb(255, 201, 0)',
-            pointBackgroundColor: 'rgb(255, 201, 0)',
+            pointBackgroundColor: 'green',
             pointBorderWidth: 3,
             pointHoverRadius: 5,
             pointHoverBackgroundColor: 'rgba(75,192,192,1)',
@@ -55,13 +55,13 @@ export class StatOverviewPage implements OnInit {
             fill: false,
             lineTension: 0.1,
             backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgb(239, 71, 58)',
+            borderColor: "#ed213a",
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
             pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#ff9933',
+            pointBackgroundColor: '#ed213a',
             pointBorderWidth: 3,
             pointHoverRadius: 5,
             pointHoverBackgroundColor: 'rgba(75,192,192,1)',
@@ -94,12 +94,12 @@ export class StatOverviewPage implements OnInit {
 
       // The data for our dataset
       data: {
-        labels: ["January", "February", "March", "April", "May"],
+        labels: ["Balance", "Expense"],
         datasets: [{
           label: "My First dataset",
-          backgroundColor: ['rgb(0, 99, 132)', 'green', 'red', 'yellow', 'orange'],
+          backgroundColor: ['green', 'red'],
           borderColor: '#fff',
-          data: [5, 10, 5, 2, 20],
+          data: [300, 847],
         }]
       },
 
