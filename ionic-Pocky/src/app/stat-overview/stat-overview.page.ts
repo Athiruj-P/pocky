@@ -7,23 +7,26 @@ import { Component, ViewChild } from '@angular/core';
   styleUrls: ['./stat-overview.page.scss'],
 })
 export class StatOverviewPage implements OnInit {
- 
-  @ViewChild('lineCanvas', {static: true}) lineCanvas: ElementRef;
+
+  @ViewChild('lineCanvas', { static: true }) lineCanvas: ElementRef;
+  @ViewChild('gaugeArea', { static: true }) gaugeArea: ElementRef;
 
   lineChart: any;
+  gaugeChart: any
   constructor() { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.lineChartMethod();
+    this.guageChartMethod();
   }
 
   lineChartMethod() {
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
       type: 'line',
       data: {
-        labels: ['02 Jan', '04 Jan', '06 Jan', '08 Jan', '10 Jan', 
-        '12 Jan', '14 Jan', '16 Jan', '18 Jan', '20 Jan', 
-        '22 Jan','24 Jan','26 Jan','28 Jan','30 Jan'],
+        labels: ['02 Jan', '04 Jan', '06 Jan', '08 Jan', '10 Jan',
+          '12 Jan', '14 Jan', '16 Jan', '18 Jan', '20 Jan',
+          '22 Jan', '24 Jan', '26 Jan', '28 Jan', '30 Jan'],
         datasets: [
           {
             label: 'Balance',
@@ -38,7 +41,7 @@ export class StatOverviewPage implements OnInit {
             pointBorderColor: 'rgb(255, 201, 0)',
             pointBackgroundColor: 'rgb(255, 201, 0)',
             pointBorderWidth: 3,
-            pointHoverRadius: 5, 
+            pointHoverRadius: 5,
             pointHoverBackgroundColor: 'rgba(75,192,192,1)',
             pointHoverBorderColor: 'rgba(220,220,220,1)',
             pointHoverBorderWidth: 2,
@@ -60,7 +63,7 @@ export class StatOverviewPage implements OnInit {
             pointBorderColor: 'rgba(75,192,192,1)',
             pointBackgroundColor: '#ff9933',
             pointBorderWidth: 3,
-            pointHoverRadius: 5, 
+            pointHoverRadius: 5,
             pointHoverBackgroundColor: 'rgba(75,192,192,1)',
             pointHoverBorderColor: 'rgba(220,220,220,1)',
             pointHoverBorderWidth: 2,
@@ -70,7 +73,7 @@ export class StatOverviewPage implements OnInit {
             spanGaps: false,
           }
         ]
-        
+
       },
       options: {
         scales: {
@@ -80,6 +83,31 @@ export class StatOverviewPage implements OnInit {
             }
           }]
         }
+      }
+    });
+  }
+
+  guageChartMethod() {
+    this.gaugeChart = new Chart(this.gaugeArea.nativeElement, {
+      // The type of chart we want to create
+      type: 'doughnut',
+
+      // The data for our dataset
+      data: {
+        labels: ["January", "February", "March", "April", "May"],
+        datasets: [{
+          label: "My First dataset",
+          backgroundColor: ['rgb(0, 99, 132)', 'green', 'red', 'yellow', 'orange'],
+          borderColor: '#fff',
+          data: [5, 10, 5, 2, 20],
+        }]
+      },
+
+      // Configuration options go here
+      options: {
+        circumference: 1 * Math.PI,
+        rotation: 1 * Math.PI,
+        cutoutPercentage: 90
       }
     });
   }
