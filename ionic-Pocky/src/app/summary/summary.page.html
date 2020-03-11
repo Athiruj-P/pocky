@@ -1,0 +1,115 @@
+<ion-content fullscreen>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button
+          defaultHref="#"
+          (click)="closeModal()"
+          text=""
+          icon="chevron-back-outline"
+        ></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-title color="light" mode="ios">Wallet Name</ion-title>
+  </ion-header>
+
+  <!-- Current Balance -->
+  <ion-row>
+    <ion-col size="6">
+      <h1>Current Balance</h1>
+    </ion-col>
+    <ion-col class="CurrentBalance">
+      <h1>{{Current}} {{Currency}}</h1>
+    </ion-col>
+  </ion-row>
+
+  <!-- Segment -->
+  <ion-segment mode="ios" value="summary">
+    <ion-segment-button value="transactions">
+      <ion-label>Transactions</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="summary">
+      <ion-label>Summary</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-card class="container">
+    <ion-card-content class="content">
+      <!-- Year -->
+      <ion-toolbar>
+        <ion-text>
+          <ion-label position="floating">Year</ion-label>
+        </ion-text>
+        <ion-item>
+          <ion-label color="Primary" (click)="Show_Year_Summary()">{{ Year }}</ion-label>
+          <ion-button fill="clear" (click)="Show_Year_Summary()">
+            <span>
+              <ion-icon name="caret-down-outline"></ion-icon>
+            </span>
+          </ion-button>
+        </ion-item>
+
+        <!-- Month -->
+        <ion-text>
+          <ion-label position="floating">Month</ion-label>
+        </ion-text>
+        <ion-item>
+          <ion-label color="Primary" (click)="Show_Month_Summary()">{{ Month }}</ion-label>
+          <ion-button fill="clear" (click)="Show_Month_Summary()">
+            <span>
+              <ion-icon name="caret-down-outline"></ion-icon>
+            </span>
+          </ion-button>
+        </ion-item>
+      </ion-toolbar>
+
+      <ion-col>
+        <!-- Total Income -->
+        <ion-item>
+          <ion-label>
+            <ion-row>
+              <ion-col size="6">
+                <ion-icon name="card-outline"></ion-icon>
+                <span>Total Income</span>
+              </ion-col>
+              <ion-col class="totalIncome">
+                <p>{{Income}} {{Currency}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+
+        <!-- Total Expense -->
+        <ion-item>
+          <ion-label>
+            <ion-row>
+              <ion-col size="6">
+                <ion-icon name="card-outline"></ion-icon>
+                <span>Total Expense</span>
+              </ion-col>
+              <ion-col class="totalExpense">
+                <p>{{Expense}} {{Currency}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+
+        <!-- Total Balance -->
+        <ion-item>
+          <ion-label>
+            <ion-row>
+              <ion-col size="6">
+                <ion-icon name="card-outline"></ion-icon>
+                <span>Total Balance</span>
+              </ion-col>
+              <ion-col class="totalBalance">
+                <p>{{Balance}} {{Currency}}</p>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+      
+    </ion-card-content>
+  </ion-card>
+</ion-content>
