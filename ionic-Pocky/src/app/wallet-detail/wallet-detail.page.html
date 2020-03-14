@@ -87,22 +87,14 @@
                 <!-- Year -->
                 <ion-toolbar>
                     <ion-text>
-                        <ion-label position="floating">Year</ion-label>
+                        <ion-label position="floating">Date</ion-label>
                     </ion-text>
                     <ion-item>
-                        <ion-label color="Primary" (click)="Show_Year_Summary()">{{ Year }}</ion-label>
+                        <ion-label color="Primary" (click)="Show_Year_Summary()">
+                            <span id="pick-year">{{ Year }}</span>
+                            <span id="pick-month">{{ Month }}</span>
+                        </ion-label>
                         <ion-button fill="clear" (click)="Show_Year_Summary()">
-                            <ion-icon class="icon-black" name="chevron-down-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
-
-                    <!-- Month -->
-                    <ion-text>
-                        <ion-label position="floating">Month</ion-label>
-                    </ion-text>
-                    <ion-item>
-                        <ion-label color="Primary" (click)="Show_Month_Summary()">{{ Month }}</ion-label>
-                        <ion-button fill="clear" (click)="Show_Month_Summary()">
                             <ion-icon class="icon-black" name="chevron-down-outline"></ion-icon>
                         </ion-button>
                     </ion-item>
@@ -112,19 +104,30 @@
                 <ion-item>
                     <ion-label>
                         <ion-row>
-                            <ion-col size="6">
-                                <ion-icon class="icon-black" name="card-outline"></ion-icon>
-                                <span>Total Income</span>
-                            </ion-col>
-                            <ion-col size="6" class="icon-black" class="totalIncome">
-                                <p>{{Income}} {{Currency}}</p>
-                            </ion-col>
+                            <ion-icon class="icon-black" name="card-outline"></ion-icon>
+                            <h3>Total Income</h3>
                         </ion-row>
+                        <ion-text color="success">
+                            <h3 class="text-right">{{Income}} {{Currency}}</h3>
+                        </ion-text>
                     </ion-label>
                 </ion-item>
 
                 <!-- Total Expense -->
                 <ion-item>
+                    <ion-label>
+                        <ion-row>
+                            <ion-icon class="icon-black" name="card-outline"></ion-icon>
+                            <h3>Total Expense</h3>
+                        </ion-row>
+                        <ion-text color="danger">
+                            <h3 class="text-right">{{Expense}} {{Currency}}</h3>
+                        </ion-text>
+                    </ion-label>
+                </ion-item>
+
+                <!-- Total Expense -->
+                <!-- <ion-item>
                     <ion-label>
                         <ion-row>
                             <ion-col size="6">
@@ -136,10 +139,21 @@
                             </ion-col>
                         </ion-row>
                     </ion-label>
-                </ion-item>
+                </ion-item> -->
 
                 <!-- Total Balance -->
-                <ion-item>
+                <!-- <ion-item>
+                    <ion-label>
+                        <ion-row>
+                            <ion-icon class="icon-black" name="card-outline"></ion-icon>
+                            <h3>Total Balance</h3>
+                        </ion-row>
+                        <h3 class="text-right">{{Balance}} {{Currency}}</h3>
+                    </ion-label>
+                </ion-item> -->
+
+                <!-- Total Balance -->
+                <!-- <ion-item>
                     <ion-label>
                         <ion-row>
                             <ion-col size="6">
@@ -151,7 +165,9 @@
                             </ion-col>
                         </ion-row>
                     </ion-label>
-                </ion-item>
+                </ion-item> -->
+                <div style="height: 50px;"></div>
+
             </ion-card>
         </div>
 

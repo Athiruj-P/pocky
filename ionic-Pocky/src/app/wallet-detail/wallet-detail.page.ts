@@ -23,28 +23,37 @@ export class WalletDetailPage implements OnInit {
   private walletName: string;
 
   private currentWalletIndex: any;
-  private sDefaultEmail: string;
   private selected = [''];
   private Year = 'Year';
   private Month = 'Month';
-  private Current = '300.00';
-  private Income = '500.00';
-  private Expense = '200.00';
-  private Balance = '300.00';
-
+  private Currency = "";
+  // private Current = '300.00';
+  private Income = 0;
+  private Expense = 0;
   private totalBalance: any;
   public segment = "transactions";
   private tran_date = [];
   private tran_detail = [];
+  arr_option = [];
+  arr_month = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
 
   constructor(private alertController: AlertController, private navCtrl: NavController, private databaseService: DatabaseService, private account: Account, private pickerCtrl: PickerController, public modalController: ModalController, public activatedRoute: ActivatedRoute) {
     this.activatedRoute.queryParams.subscribe((res) => {
       this.currentWalletIndex = res.index;
       this.walletName = this.account.getWallet()[res.index].getWalletName();
+      this.Currency = this.account.getWallet()[res.index].getCurrency().getNameAbb();
       this.calculateTotal();
       this.load_transaction();
       // this.load_transaction();
       console.log(this.account.getWallet()[res.index])
+
+      databaseService.get_year({ "wal_id": this.account.getWallet()[res.index].getId() }).subscribe(res => {
+        res.forEach(val => {
+          this.arr_option.push({ text: val.Year, value: val.Year });
+        });
+      })
+
     })
   }
 
@@ -143,12 +152,23 @@ export class WalletDetailPage implements OnInit {
       columns: [
         {
           name: 'Year',
+          options: this.arr_option
+        }, {
+          name: 'Month',
           options: [
-            { text: 'Year ', value: 'Year' },
-            { text: '2017 ', value: '2017' },
-            { text: '2018 ', value: '2018' },
-            { text: '2019 ', value: '2019' },
-            { text: '2020 ', value: '2020' }
+            { text: 'Month ', value: 'Month' },
+            { text: 'January ', value: 'January' },
+            { text: 'February ', value: 'February' },
+            { text: 'March ', value: 'March' },
+            { text: 'April ', value: 'April' },
+            { text: 'May ', value: 'May' },
+            { text: 'June ', value: 'June' },
+            { text: 'July ', value: 'July' },
+            { text: 'August ', value: 'August' },
+            { text: 'September ', value: 'September' },
+            { text: 'October ', value: 'October' },
+            { text: 'November ', value: 'November' },
+            { text: 'December ', value: 'December' }
           ]
         }
       ]
@@ -157,7 +177,10 @@ export class WalletDetailPage implements OnInit {
     picker.present();
     picker.onDidDismiss().then(async data => {
       let Year = await picker.getColumn('Year');
-      this.Year = Year.options[Year.selectedIndex].value
+      this.Year = Year.options[Year.selectedIndex].value;
+      let Month = await picker.getColumn('Month');
+      this.Month = Month.options[Month.selectedIndex].value
+      this.get_summary_detail();
     });
   }
 
@@ -198,6 +221,7 @@ export class WalletDetailPage implements OnInit {
     picker.onDidDismiss().then(async data => {
       let Month = await picker.getColumn('Month');
       this.Month = Month.options[Month.selectedIndex].value
+      this.get_summary_detail();
     });
   }
 
@@ -231,6 +255,33 @@ export class WalletDetailPage implements OnInit {
     })
 
     return await modal.present();
+  }
+
+  get_summary_detail() {
+    this.Income = 0;
+    this.Expense = 0;
+    var tmp_month = "";
+    var str_date = "";
+    var tmp_index = this.arr_month.indexOf(this.Month) + 1;
+    if (tmp_index) {
+      tmp_month = tmp_index != 12 ? `0${tmp_index.toString()}` : tmp_index.toString();
+      str_date = `${this.Year}-${tmp_month}`;
+      console.log(str_date);
+      var json = { "wal_id": 5, "date": str_date };
+      this.databaseService.get_TotalIncome(json).subscribe(res => {
+        if (Object.keys(res).length > 0) {
+          console.log(res[0].TotalIncome)
+          this.Income = res[0].TotalIncome.toLocaleString('en-US');
+        }
+      });
+
+      this.databaseService.get_TotalExpense(json).subscribe(res => {
+        if (Object.keys(res).length > 0) {
+          console.log(res[0].TotalExpense)
+          this.Expense = res[0].TotalExpense.toLocaleString('en-US');
+        }
+      });
+    }
   }
 
   // async modal_editTransaction(tran_id) {
