@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { DatabaseService } from 'src/app/services/database.service';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Import classes from pattern.component.ts
@@ -22,7 +23,7 @@ export class RegisterPage implements OnInit {
   private password: string;
   private confirm_password: string;
 
-  constructor(private navCtrl: NavController, private router: Router, private account: Account, private databaseService: DatabaseService) { }
+  constructor(public toastController: ToastController, private navCtrl: NavController, private router: Router, private account: Account, private databaseService: DatabaseService) { }
 
   ngOnInit() {
   }
@@ -35,21 +36,34 @@ export class RegisterPage implements OnInit {
     this.navCtrl.back();
   }
 
+  async showToast(mess, color) {
+    const toast = await this.toastController.create({
+      mode: "ios",
+      message: mess,
+      position: 'top',
+      duration: 1500,
+      color: color
+    });
+    toast.present();
+  }
 
   register() {
-    if (this.password == this.confirm_password) {
+    if (!this.username || !this.password || !this.confirm_password) {
+      this.showToast("Username and password are required!!","danger");
+    } else if (this.password == this.confirm_password) {
       this.account.setUsername(this.username);
       this.account.setPassword(this.password);
       this.account.register().then(
         () => {
           this.username = "";
           this.password = "";
-          this.gotoPage('home')
+          this.gotoPage('home');
+          this.showToast("Hello newbie :)","success")
         },
-        () => console.log("username had been taken")
+        () => this.showToast("Username had been taken!!","danger")
       )
     } else {
-      console.log("Password are not match!!");
+      this.showToast("Password are not match!!","danger")
     }
 
   }
