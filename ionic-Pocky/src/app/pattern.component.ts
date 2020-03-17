@@ -73,6 +73,37 @@ export class Account {
         return promise;
     }
 
+    reloadWallet() {
+        this.wallet = [];
+        var promies = new Promise((resolve, rej) => {
+            this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res => {
+                if (Object.keys(res).length > 0) {
+                    this.databaseService.get_wallet_by_ac_id({ ac_id: this.ac_id }).subscribe(res_wal => {
+                        if (Object.keys(res_wal).length > 0) {
+                            res_wal.forEach(val_wal => {
+                                var tmpWal = new PersonalWallet;
+                                var tmpCurrency = new Currency;
+                                tmpCurrency.setName(val_wal.cur_name);
+                                tmpCurrency.setNameAbb(val_wal.cur_name_abb);
+                                tmpWal.setId(val_wal.wal_id);
+                                tmpWal.setWalletName(val_wal.wal_name);
+                                tmpWal.setCurrency(tmpCurrency);
+                                tmpWal.setTotalBalance(val_wal.wal_money);
+                                this.wallet.push(tmpWal);
+                            });
+                            resolve(true);
+                        } else {
+                            resolve(true);
+                        }
+                    })
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+        return promies;
+    }
+
     loadWallet(wal_id) {
         var promise = new Promise((resolve, reject) => {
             var transaction = [];
@@ -119,6 +150,7 @@ export class Account {
 
     setWallet(wallet) {
         this.wallet.push(wallet);
+        this.reloadWallet();
     }
 
     getWallet() {
