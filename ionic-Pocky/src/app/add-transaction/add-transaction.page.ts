@@ -53,6 +53,6 @@ export class AddTransactionPage implements OnInit {
     }
   }
   async closeModal() {
-    await this.modalController.dismiss();
+    await this.modalController.dismiss(this.index);
   }
 }
