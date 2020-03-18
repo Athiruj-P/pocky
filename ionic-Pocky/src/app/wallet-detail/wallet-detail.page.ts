@@ -109,6 +109,7 @@ export class WalletDetailPage implements OnInit {
     this.account.getWallet()[this.currentWalletIndex].updateTotalBalance().then(
       (balance) => {
         this.totalBalance = balance;
+        // console.log("calculateTotal=> \n In 01 updateTotalBalance");
       }
     ).then(
       () => {
@@ -117,6 +118,7 @@ export class WalletDetailPage implements OnInit {
           wal_money: this.totalBalance
         }
         this.account.databaseService.update_wallet_balance(json).subscribe(res => {
+          // console.log(res)
         });
       }
     )
@@ -348,6 +350,7 @@ export class WalletDetailPage implements OnInit {
             }
             this.databaseService.remove_transaction(json).subscribe(res => {
               this.load_transaction();
+              this.showToast("Deleted a transaction","danger");
             })
           }
         }
