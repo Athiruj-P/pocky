@@ -27,7 +27,6 @@ export class WalletDetailPage implements OnInit {
   private Year = 'Year';
   private Month = 'Month';
   private Currency = "";
-  // private Current = '300.00';
   private Income = 0;
   private Expense = 0;
   private totalBalance: any;
@@ -45,7 +44,6 @@ export class WalletDetailPage implements OnInit {
       this.Currency = this.account.getWallet()[res.index].getCurrency().getNameAbb();
       this.calculateTotal();
       this.load_transaction();
-      // this.load_transaction();
       console.log(this.account.getWallet()[res.index])
 
       databaseService.get_year({ "wal_id": this.account.getWallet()[res.index].getId() }).subscribe(res => {
@@ -63,7 +61,6 @@ export class WalletDetailPage implements OnInit {
     this.account.getWallet()[this.currentWalletIndex].updateTotalBalance().then(
       (balance) => {
         this.totalBalance = balance;
-        // console.log("calculateTotal=> \n In 01 updateTotalBalance");
       }
     ).then(
       () => {
@@ -72,7 +69,6 @@ export class WalletDetailPage implements OnInit {
           wal_money: this.totalBalance
         }
         this.account.databaseService.update_wallet_balance(json).subscribe(res => {
-          // console.log(res)
         });
       }
     )
@@ -226,11 +222,6 @@ export class WalletDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    // console.log("In ngOnInit");
-    // console.log("In ngOnInit \n call load_transaction");
-    // this.load_transaction();
-    // console.log("In ngOnInit \n call calculateTotal");
-    // this.calculateTotal();
   }
 
   async modal_addTransaction() {
@@ -283,33 +274,6 @@ export class WalletDetailPage implements OnInit {
       });
     }
   }
-
-  // async modal_editTransaction(tran_id) {
-  //   console.log("modal_editTransaction")
-  //   console.log(this.currentWalletIndex)
-  //   console.log(tran_id)
-  //   const modal = await this.modalController.create({
-  //     component: EditTransactionPage,
-  //     componentProps: {
-  //       walletIndex: this.currentWalletIndex,
-  //       tran_id: tran_id,
-  //     }
-  //   });
-
-  //   modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-  //     this.currentWalletIndex = detail.data;
-  //   }).then(() => {
-  //     return Promise.resolve(
-  //       this.calculateTotal()
-  //     );
-  //   }).then(() => {
-  //     return Promise.resolve(
-  //       this.load_transaction()
-  //     );
-  //   })
-
-  //   return await modal.present();
-  // }
 
   async presentAlert(tran_id) {
     const alert = await this.alertController.create({
