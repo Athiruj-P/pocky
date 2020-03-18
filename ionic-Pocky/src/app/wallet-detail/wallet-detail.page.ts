@@ -55,6 +55,54 @@ export class WalletDetailPage implements OnInit {
     })
   }
 
+  ionViewWillEnter() {
+    this.loadChert();
+  }
+
+  calculate_pie_area() {
+    this.pie_income = Math.round((this.Income / (this.Income + this.Expense)) * 100);
+    this.pie_expense = Math.round((this.Expense / (this.Income + this.Expense)) * 100);
+    console.log(`Income => ${this.Income / (this.Income + this.Expense)} | Exp => ${(this.Expense / (this.Income + this.Expense)) * 100}`);
+  }
+
+  loadChert() {
+    this.calculate_pie_area();
+    var speed = 250
+    this.gaugeChart = new Chart(this.gaugeArea.nativeElement, {
+      type: 'pie',
+      data: {
+        labels: ['Income', 'Expense'],
+        datasets: [{
+          label: '# of Tomatoes',
+          data: [this.Income, this.Expense],
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 99, 132, 0.5)'
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+            'rgba(255,99,132,1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        //cutoutPercentage: 40,
+        responsive: true,
+        legend: {
+          display: true,
+          position: "top",
+          labels: {
+            fontColor: "#333",
+            fontSize: 12
+          }
+        }
+
+      }
+    });
+
+  }
+
   calculateTotal() {
     console.log("In calculateTotal")
     this.totalBalance = 0;
@@ -78,7 +126,7 @@ export class WalletDetailPage implements OnInit {
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     return `${date.substr(8, 2)} ${month[parseInt(date.substr(5, 2)) - 1]} ${date.substr(0, 4)}`
   }
-
+  
   format_transaction() {
     this.tran_date = [];
     this.tran_detail = [];
@@ -258,18 +306,20 @@ export class WalletDetailPage implements OnInit {
       tmp_month = tmp_index != 12 ? `0${tmp_index.toString()}` : tmp_index.toString();
       str_date = `${this.Year}-${tmp_month}`;
       console.log(str_date);
-      var json = { "wal_id": 5, "date": str_date };
+      var json = { "wal_id": this.account.getWallet()[this.currentWalletIndex].getId(), "date": str_date };
       this.databaseService.get_TotalIncome(json).subscribe(res => {
         if (Object.keys(res).length > 0) {
           console.log(res[0].TotalIncome)
-          this.Income = res[0].TotalIncome.toLocaleString('en-US');
+          this.Income = res[0].TotalIncome;
+          this.loadChert();
         }
       });
 
       this.databaseService.get_TotalExpense(json).subscribe(res => {
         if (Object.keys(res).length > 0) {
           console.log(res[0].TotalExpense)
-          this.Expense = res[0].TotalExpense.toLocaleString('en-US');
+          this.Expense = res[0].TotalExpense;
+          this.loadChert();
         }
       });
     }
