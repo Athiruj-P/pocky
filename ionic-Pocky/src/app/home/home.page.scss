@@ -125,12 +125,24 @@ ion-card-title {
 
     .btn-add-tran {
         --background: #FFC31C;
-        --background-focused:rgb(206, 156, 19) !important;
-        --background-hover:rgb(206, 156, 19) !important;
-        --background-activated:rgb(206, 156, 19) !important;
+        --background-focused: rgb(206, 156, 19) !important;
+        --background-hover: rgb(206, 156, 19) !important;
+        --background-activated: rgb(206, 156, 19) !important;
     }
 }
 
-.icon-wallet{
+.icon-wallet {
     margin-right: 10px;
+}
+
+.swiper-pagination-bullet {
+    bottom: -5px !important;
+}
+
+ion-slides {
+    --bullet-background: white;
+    --bullet-background-active : white;
+    h1{
+        margin-bottom: 25px;
+    }
 }

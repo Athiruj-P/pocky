@@ -6,6 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { OverlayEventDetail } from '@ionic/core';
 import { AddTransactionPage } from '../add-transaction/add-transaction.page';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Import classes from pattern.component.ts
@@ -24,21 +25,57 @@ import { DatabaseService } from 'src/app/services/database.service';
 export class HomePage {
   private username: string;
   private totalBalance = 0;
-  private wallets = [];
-  constructor(private alertController: AlertController, private databaseService: DatabaseService, private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController, private router: Router) {
+  private all_wallets = [];
+  private arr_sum_balance = 0;
+  private arr_cur = [];
+  constructor(public toastController: ToastController, private alertController: AlertController, private databaseService: DatabaseService, private navCtrl: NavController, public actionSheetController: ActionSheetController, private account: Account, private modalController: ModalController, private router: Router) {
     this.username = this.account.getUsername();
-    this.wallets = this.account.getWallet();
+    this.all_wallets = this.account.getWallet();
     this.username = account.getUsername();
     this.calculateTotal();
+    this.totalbalance_by_cur();
+  }
+
+  totalbalance_by_cur() {
+    this.arr_sum_balance = 0;
+    this.arr_cur = [];
+    var tmp_cur: any;
+    this.account.getWallet().forEach((val, index) => {
+      if (index == 0) {
+        tmp_cur = val.getCurrency().getNameAbb();
+        this.arr_sum_balance += val.getTotalBalance();
+      } else if (tmp_cur == val.getCurrency().getNameAbb()) {
+        this.arr_sum_balance += val.getTotalBalance();
+      } else {
+        this.arr_cur.push({
+          "currency": tmp_cur,
+          "arr_sum_balance": this.arr_sum_balance
+        })
+        this.arr_sum_balance = 0;
+
+        tmp_cur = val.getCurrency().getNameAbb();
+        this.arr_sum_balance += val.getTotalBalance();
+      }
+
+      if (this.account.getWallet().length - 1 == index) {
+        this.arr_cur.push({
+          "currency": tmp_cur,
+          "arr_sum_balance": this.arr_sum_balance
+        })
+      }
+
+    })
+    console.log(this.arr_cur)
   }
 
   calculateTotal() {
     console.log("home page => in cal")
-    console.log(this.wallets)
+    console.log(this.all_wallets)
     this.totalBalance = 0;
-    this.wallets.forEach(val => {
+    this.all_wallets.forEach(val => {
       this.totalBalance += val.getTotalBalance();
     });
+    this.totalbalance_by_cur();
   }
 
   ngOnInit(): void {
@@ -61,7 +98,7 @@ export class HomePage {
      */
     const actionSheet = await this.actionSheetController.create({
       header: 'Actions',
-      buttons: [ {
+      buttons: [{
         text: 'Edit name',
         handler: () => {
           console.log('Edit name');
@@ -100,6 +137,18 @@ export class HomePage {
 
     return await modal.present();
   }
+
+  async showToast(mess, color) {
+    const toast = await this.toastController.create({
+      mode: "ios",
+      message: mess,
+      position: 'top',
+      duration: 1000,
+      color: color
+    });
+    toast.present();
+  }
+
   async presentAlert(index) {
     const alert = await this.alertController.create({
       header: 'Delete',
@@ -119,9 +168,10 @@ export class HomePage {
           handler: () => {
             console.log('Confirm Okay');
             console.log('Delete');
-            this.account.databaseService.remove_wallet_by_id({ wal_id: this.wallets[index].getId() }).subscribe(res => {
-              this.wallets.splice(index, 1);
+            this.account.databaseService.remove_wallet_by_id({ wal_id: this.all_wallets[index].getId() }).subscribe(res => {
+              this.all_wallets.splice(index, 1);
               this.calculateTotal();
+              this.showToast("Deleted a wallet ","danger");
             })
           }
         }
@@ -138,7 +188,7 @@ export class HomePage {
       inputs: [
         {
           name: 'name',
-          placeholder: this.wallets[index].getWalletName()
+          placeholder: this.all_wallets[index].getWalletName()
         },
 
       ],
@@ -154,9 +204,10 @@ export class HomePage {
           text: 'Confirm',
           handler: data => {
             console.log(data.name);
-            console.log(this.wallets[index]);
-            this.account.databaseService.rename_wallet_by_id({ wal_id: this.wallets[index].getId(), wal_name: data.name }).subscribe(res => {
-              this.wallets[index].setWalletName(data.name);
+            console.log(this.all_wallets[index]);
+            this.account.databaseService.rename_wallet_by_id({ wal_id: this.all_wallets[index].getId(), wal_name: data.name }).subscribe(res => {
+              this.all_wallets[index].setWalletName(data.name);
+              this.showToast("Updateed a wallet's name ","warning");
             });
           }
         }
