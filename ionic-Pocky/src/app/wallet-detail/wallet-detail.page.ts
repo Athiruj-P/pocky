@@ -37,15 +37,15 @@ export class WalletDetailPage implements OnInit {
   arr_month = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
 
-  constructor(private alertController: AlertController, private navCtrl: NavController, private databaseService: DatabaseService, private account: Account, private pickerCtrl: PickerController, public modalController: ModalController, public activatedRoute: ActivatedRoute) {
+  constructor(public toastController: ToastController, private alertController: AlertController, private navCtrl: NavController, private databaseService: DatabaseService, private account: Account, private pickerCtrl: PickerController, public modalController: ModalController, public activatedRoute: ActivatedRoute) {
     this.activatedRoute.queryParams.subscribe((res) => {
       this.currentWalletIndex = res.index;
       this.walletName = this.account.getWallet()[res.index].getWalletName();
       this.Currency = this.account.getWallet()[res.index].getCurrency().getNameAbb();
       this.calculateTotal();
       this.load_transaction();
+      // this.load_transaction();
       console.log(this.account.getWallet()[res.index])
-
       databaseService.get_year({ "wal_id": this.account.getWallet()[res.index].getId() }).subscribe(res => {
         res.forEach(val => {
           this.arr_option.push({ text: val.Year, value: val.Year });
