@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { PickerOptions, OverlayEventDetail } from '@ionic/core';
 import { AlertController, NavController, ModalController, PickerController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AddTransactionPage } from '../add-transaction/add-transaction.page';
-// import { EditTransactionPage } from '../edit-transaction/edit-transaction.page';
+import { EditTransactionPage } from '../edit-transaction/edit-transaction.page';
 import { DatabaseService } from 'src/app/services/database.service';
+import { Chart } from 'chart.js';
+import { ToastController } from '@ionic/angular';
+
 /**
  * Import classes from pattern.component.ts
  * เข้าถึงคลาสต่าง ๆ ที่ต้องใช้ โดยกำหนดชื่อของคลาสที่ต้องการ
@@ -20,8 +23,10 @@ import { transformAll } from '@angular/compiler/src/render3/r3_ast';
   styleUrls: ['./wallet-detail.page.scss'],
 })
 export class WalletDetailPage implements OnInit {
-  private walletName: string;
+  @ViewChild('gaugeArea', { static: true }) gaugeArea: ElementRef;
+  private gaugeChart: Chart;
 
+  private walletName: string;
   private currentWalletIndex: any;
   private selected = [''];
   private Year = 'Year';
@@ -29,6 +34,8 @@ export class WalletDetailPage implements OnInit {
   private Currency = "";
   private Income = 0;
   private Expense = 0;
+  private pie_income = 0;
+  private pie_expense = 0;
   private totalBalance: any;
   public segment = "transactions";
   private tran_date = [];
@@ -128,7 +135,7 @@ export class WalletDetailPage implements OnInit {
     var month = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"]
     return `${date.substr(8, 2)} ${month[parseInt(date.substr(5, 2)) - 1]} ${date.substr(0, 4)}`
   }
-  
+
   format_transaction() {
     this.tran_date = [];
     this.tran_detail = [];
@@ -272,6 +279,11 @@ export class WalletDetailPage implements OnInit {
   }
 
   ngOnInit() {
+    // console.log("In ngOnInit call load_transaction");
+    // console.log(`=>>> ${this.barCanvas.nativeElement.innerText}`);
+    // this.load_transaction();
+    // console.log("In ngOnInit \n call calculateTotal");
+    // this.calculateTotal();
   }
 
   async modal_addTransaction() {
@@ -325,6 +337,44 @@ export class WalletDetailPage implements OnInit {
         }
       });
     }
+  }
+
+  async modal_editTransaction(tran_id) {
+    console.log("modal_editTransaction")
+    console.log(this.currentWalletIndex)
+    console.log(tran_id)
+    const modal = await this.modalController.create({
+      component: EditTransactionPage,
+      componentProps: {
+        walletIndex: this.currentWalletIndex,
+        tran_id: tran_id,
+      }
+    });
+
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      this.currentWalletIndex = detail.data;
+    }).then(() => {
+      return Promise.resolve(
+        this.calculateTotal()
+      );
+    }).then(() => {
+      return Promise.resolve(
+        this.load_transaction()
+      );
+    })
+
+    return await modal.present();
+  }
+
+  async showToast(mess, color) {
+    const toast = await this.toastController.create({
+      mode: "ios",
+      message: mess,
+      position: 'top',
+      duration: 1000,
+      color: color
+    });
+    toast.present();
   }
 
   async presentAlert(tran_id) {
