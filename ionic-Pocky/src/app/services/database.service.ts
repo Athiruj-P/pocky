@@ -94,5 +94,4 @@ export class DatabaseService {
   get_TotalExpense(json) {
     return this.http.post(`${this.url}/summary-get-TotalExpense`, json).map(res => res.json());
   }
-
 }

@@ -130,7 +130,8 @@ app.post("/wallet-get-by-id", (req, res) => {
   let sql = ` SELECT * FROM wallet
               INNER JOIN currency ON cur_id = wal_cur_id
               WHERE wal_ac_id = '${req.body.ac_id}'
-              AND wal_status = 'Y' ;`;
+              AND wal_status = 'Y'
+              ORDER BY wal_cur_id;`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -355,7 +356,8 @@ app.listen(3000, () => {
  */
 app.post("/summary-get-year", (req, res) => {
   let sql = ` SELECT distinct YEAR(tran_date) AS Year FROM transaction
-              WHERE tran_wal_id = '${req.body.wal_id}' AND tran_status = 'Y' `;
+              WHERE tran_wal_id = '${req.body.wal_id}' 
+              AND tran_status = 'Y' `;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -372,7 +374,9 @@ app.post("/summary-get-year", (req, res) => {
  */
 app.post("/summary-get-TotalIncome", (req, res) => {
   let sql = ` SELECT SUM(tran_amount) AS TotalIncome FROM transaction
-              WHERE tran_type = 1 AND tran_wal_id = '${req.body.wal_id}' AND tran_date LIKE '${req.body.date}%' `;
+              WHERE tran_type = 1 AND tran_wal_id = '${req.body.wal_id}' 
+              AND tran_date LIKE '${req.body.date}%' 
+              AND tran_status = 'Y'`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);
@@ -389,7 +393,9 @@ app.post("/summary-get-TotalIncome", (req, res) => {
  */
 app.post("/summary-get-TotalExpense", (req, res) => {
   let sql = ` SELECT SUM(tran_amount) AS TotalExpense FROM transaction
-              WHERE tran_type = 2 AND tran_wal_id = '${req.body.wal_id}' AND tran_date LIKE '${req.body.date}%' `;
+              WHERE tran_type = 2 AND tran_wal_id = '${req.body.wal_id}' 
+              AND tran_date LIKE '${req.body.date}%' 
+              AND tran_status = 'Y'`;
   let query = db.query(sql, (err, results) => {
     if (err) throw err;
     res.json(results);

@@ -14,7 +14,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AddNewWalletPage } from '../app/add-new-wallet/add-new-wallet.page';
 import { AddTransactionPage } from '../app/add-transaction/add-transaction.page';
-// import { EditTransactionPage } from '../app/edit-transaction/edit-transaction.page';
+import { EditTransactionPage } from '../app/edit-transaction/edit-transaction.page';
+
 /**
  * Import classes from pattern.component.ts
  * เข้าถึงคลาสต่าง ๆ ที่ต้องใช้ โดยกำหนดชื่อของคลาสที่ต้องการ
@@ -23,8 +24,8 @@ import { AddTransactionPage } from '../app/add-transaction/add-transaction.page'
  */
 import { Account } from './pattern.component';
 @NgModule({
-  declarations: [AppComponent, AddNewWalletPage, AddTransactionPage],
-  entryComponents: [AddNewWalletPage, AddTransactionPage],
+  declarations: [AppComponent, AddNewWalletPage, EditTransactionPage, AddTransactionPage],
+  entryComponents: [AddNewWalletPage, EditTransactionPage, AddTransactionPage],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, HttpModule, FormsModule],
   providers: [
     Account,
