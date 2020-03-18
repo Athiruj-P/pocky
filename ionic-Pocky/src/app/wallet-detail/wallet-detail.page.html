@@ -21,7 +21,7 @@
     </ion-text>
 
     <!-- Segment -->
-    <ion-segment mode="ios" [(ngModel)]="segment" value="transactions">
+    <ion-segment mode="ios" [(ngModel)]="segment" (ionChange)="guageChartMethod()">
         <ion-segment-button value="transactions">
             <ion-label>Transactions</ion-label>
         </ion-segment-button>
@@ -31,6 +31,7 @@
     </ion-segment>
 
     <ion-card class="container">
+        <canvas #gaugeArea [hidden]="segment!='summary'" style="display: block; height: 150px; width: 300px;"></canvas>
         <div [ngSwitch]="segment">
             <ion-card mode="ios" class="child-card-header" *ngSwitchCase="'transactions'">
                 <ion-item-group *ngFor="let date of tran_date let i = index">
