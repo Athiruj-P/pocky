@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Account } from '../pattern.component';
 import { Income, Expenditure } from '../pattern.component';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-transaction',
@@ -19,6 +20,16 @@ export class AddTransactionPage implements OnInit {
   ngOnInit() {
   }
 
+  async showToast(mess, color) {
+    const toast = await this.toastController.create({
+      mode: "ios",
+      message: mess,
+      position: 'top',
+      duration: 1000,
+      color: color
+    });
+    toast.present();
+  }
   addTransaction() {
     if (this.balance <= 0) {
       this.showToast(`Balance must greater than 0 !!`, "danger");
