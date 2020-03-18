@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+
 import { Account } from '../pattern.component';
 import { Income, Expenditure } from '../pattern.component';
 import { ToastController } from '@ionic/angular';
@@ -11,8 +12,15 @@ import { not } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./edit-transaction.page.scss'],
 })
 export class EditTransactionPage implements OnInit {
+  walletIndex;
+  tran_id;
+  public segment: string;
+  private balance: number;
+  private note: string;
+  private targetTransaction: any;
 
-  constructor() { }
+  constructor(public toastController: ToastController, public modalController: ModalController, private account: Account) {
+  }
 
   ngOnInit() {
     console.log(this.walletIndex)
@@ -32,6 +40,17 @@ export class EditTransactionPage implements OnInit {
         this.balance = this.targetTransaction instanceof Income ? this.targetTransaction.getAmount() : -1 * this.targetTransaction.getAmount();
       })
     })
+  }
+
+  async showToast(mess, color) {
+    const toast = await this.toastController.create({
+      mode: "ios",
+      message: mess,
+      position: 'top',
+      duration: 1000,
+      color: color
+    });
+    toast.present();
   }
 
   editTransaction() {
@@ -61,5 +80,9 @@ export class EditTransactionPage implements OnInit {
     } else {
       this.showToast(`Please fill in all informations!!`, "danger");
     }
+  }
+
+  async closeModal() {
+    await this.modalController.dismiss(this.walletIndex);
   }
 }

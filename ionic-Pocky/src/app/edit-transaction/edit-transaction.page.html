@@ -1,9 +1,47 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>edit-transaction</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="wallet-detail" (click)="closeModal()" text="" icon="chevron-back-outline"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <ion-title color="light" mode="ios">Edit Transaction</ion-title>
+  </ion-header>
 
-<ion-content>
+  <!-- Segment -->
+  <ion-segment [(ngModel)]="segment" value="Expenses" mode="ios">
+    <ion-segment-button value="Expenses">
+      <ion-label>Expenses</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Income">
+      <ion-label>Income</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-card class="container">
+    <ion-card-content class="content">
+
+      <!-- Input balance -->
+      <ion-item>
+        <ion-label position="floating">Intial Balance</ion-label>
+        <ion-input [(ngModel)] = "balance" type="number"></ion-input>
+      </ion-item>
+
+      <!-- Input Notes -->
+      <ion-item>
+        <ion-label position="floating">Notes</ion-label>
+        <ion-input [(ngModel)] = "note" type="text"></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Add Transaction button -->
+  <ion-col size="12" class="fab">
+    <ion-button (click)="editTransaction()" expand="block" class="btn-add-tran" mode="ios">
+      <ion-icon class="icon-wallet" name="card-outline"></ion-icon>
+      Add Transaction
+    </ion-button>
+  </ion-col>
 
 </ion-content>
